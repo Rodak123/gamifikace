@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           String               @id @default(uuid())
+  email        String               @unique
+  nickname     String               @unique
+  firstName    String               @unique
+  lastName     String               @unique
+  createdAt    DateTime             @default(now())
+  achievements UserAchievementLog[]
+}
+
+model Achievement {
+  key         String               @id @unique
+  xp          Int
+  name        String
+  description String
+  users       UserAchievementLog[]
+  createdAt   DateTime             @default(now())
+}
+
+model UserAchievementLog {
+  user           User        @relation(fields: [userId], references: [id])
+  userId         String
+  achievement    Achievement @relation(fields: [achievementKey], references: [key])
+  achievementKey String
+  earnedAt       DateTime    @default(now())
+
+  @@id([userId, achievementKey])
+}

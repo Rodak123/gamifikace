@@ -1,0 +1,24 @@
+info:
+  name: Create Achievement
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: "{{API_PATH}}/achievement/create"
+  body:
+    type: json
+    data: |-
+      {
+        "key": "react-dev",
+        "name": "Use React",
+        "xp": 200,
+        "description": "Use React to create a small app."
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

@@ -1,0 +1,17 @@
+{
+  "name": "gamifikace",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend",
+    "shared"
+  ],
+  "dependencies": {
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.2.0",
+    "typescript-eslint": "^8.58.1"
+  }
+}

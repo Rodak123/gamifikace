@@ -1,0 +1,15 @@
+info:
+  name: Get One Achievement
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: "{{API_PATH}}/achievement/react-dev"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

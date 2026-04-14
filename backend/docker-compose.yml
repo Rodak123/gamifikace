@@ -1,0 +1,19 @@
+name: gamifikace-backend
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: gamifikace_db
+    restart: always
+    env_file: .env
+    ports:
+      - '${DB_DOCKER_PORT}:5432'
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
