@@ -1,9 +1,9 @@
 import { z } from 'zod';
 
 export const BaseRequestSchema = z.object({
-  body: z.any().optional(),
-  params: z.any().optional(),
-  query: z.any().optional(),
+  body: z.object(),
+  params: z.object(),
+  query: z.object(),
 });
 
 export const SuccessResponseSchema = <T extends z.ZodTypeAny>(dataSchema: T) =>

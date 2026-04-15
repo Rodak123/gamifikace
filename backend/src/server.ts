@@ -9,6 +9,8 @@ import { rateLimit } from 'express-rate-limit';
 
 import { errorHandler } from './middleware/errorHandler.js';
 import { achievementRoutes, rootRoutes } from './routes/index.js';
+import { authRoutes } from './routes/authRoutes.js';
+import { userRoutes } from './routes/userRoutes.js';
 
 const app: Express = express();
 const PORT = env.PORT;
@@ -28,6 +30,8 @@ app.use(limiter);
 
 // Routes
 app.use(rootRoutes);
+app.use(authRoutes);
+app.use(userRoutes);
 app.use(achievementRoutes);
 
 app.use((_req, res) => {

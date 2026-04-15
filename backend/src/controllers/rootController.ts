@@ -6,7 +6,7 @@ import {
   HealthResponseSchema,
 } from '@gamifikace/shared';
 import { RequestHandler } from 'express';
-import { respondWith } from '../middleware/respondWith';
+import { respondWith } from '../utils/respondWith';
 import { checkDatabase } from '../config/db';
 import { env } from '../config/env';
 

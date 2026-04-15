@@ -14,13 +14,13 @@
   },
   "include": [
     "src/**/*.ts",
-    "prisma.config.ts"
   ],
   "exclude": [
     "node_modules",
     "dist",
     "tests/**/*.ts",
     "**/*.test.ts",
-    "eslint.config.ts"
+    "eslint.config.ts",
+    "prisma.config.ts"
   ]
 }

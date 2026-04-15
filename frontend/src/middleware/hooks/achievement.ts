@@ -1,17 +1,17 @@
 import { useQuery } from '@tanstack/react-query';
 import { unwrapResponse } from './unwrapResponse';
-import { getAllAchievements, getOneAchievement } from '../endpoints';
+import { achievementEndpoints } from '../endpoints';
 
 export const useAllAchievements = () => {
   return useQuery({
     queryKey: ['achievements'],
-    queryFn: () => unwrapResponse(getAllAchievements()),
+    queryFn: () => unwrapResponse(achievementEndpoints.getAllAchievements()),
   });
 };
 
 export const useOneAchievement = (key: string) => {
   return useQuery({
     queryKey: ['achievement', key],
-    queryFn: () => unwrapResponse(getOneAchievement(key)),
+    queryFn: () => unwrapResponse(achievementEndpoints.getOneAchievement(key)),
   });
 };

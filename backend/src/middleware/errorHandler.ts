@@ -2,20 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { env } from '../config/env.js';
 import { ZodError } from 'zod';
 import { ErrorResponseSchema } from '@gamifikace/shared';
-
-export class EndpointError extends Error {
-  private _statusCode: number;
-
-  constructor(statusCode: number, message: string) {
-    super(message);
-    this.name = 'EndpointError';
-    this._statusCode = statusCode;
-  }
-
-  public get statusCode() {
-    return this._statusCode;
-  }
-}
+import { EndpointError } from './endpointError.js';
 
 type ErrorType = Error & { statusCode?: number };
 

@@ -1,8 +1,8 @@
 import { z } from 'zod';
 export declare const HealthRequestSchema: z.ZodObject<{
-    body: z.ZodOptional<z.ZodAny>;
-    params: z.ZodOptional<z.ZodAny>;
-    query: z.ZodOptional<z.ZodAny>;
+    body: z.ZodObject<{}, z.core.$strip>;
+    params: z.ZodObject<{}, z.core.$strip>;
+    query: z.ZodObject<{}, z.core.$strip>;
 }, z.core.$strip>;
 export declare const HealthResponseSchema: z.ZodObject<{
     success: z.ZodLiteral<true>;

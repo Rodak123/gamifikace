@@ -8,7 +8,9 @@ import { z } from 'zod';
 export const GetAllAchievementsRequestSchema = BaseRequestSchema.extend({});
 
 export const GetAllAchievementsResponseSchema = SuccessResponseSchema(
-  z.array(AchievementSchema),
+  z.object({
+    achievements: z.array(AchievementSchema),
+  }),
 );
 
 type GetAllAchievementsRequest = z.infer<

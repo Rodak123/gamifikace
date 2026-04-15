@@ -1,7 +1,6 @@
 import { RequestHandler } from 'express';
 import { prisma } from '../config/db.js';
-import { EndpointError } from '../middleware/errorHandler.js';
-import { respondWith } from '../middleware/respondWith.js';
+import { respondWith } from '../utils/respondWith.js';
 import { AchievementService } from '../services/AchievementService.js';
 import {
   CreateAchievementParams,
@@ -20,6 +19,7 @@ import {
   GetAllAchievementsResponse,
   GetAllAchievementsResponseSchema,
 } from '@gamifikace/shared';
+import { EndpointError } from '../middleware/endpointError.js';
 
 const achievementService = new AchievementService(prisma);
 
@@ -36,7 +36,9 @@ export const createAchievementHandler: RequestHandler<
     req.body.xp
   );
 
-  respondWith(res, 200, CreateAchievementResponseSchema, newAchievement);
+  respondWith(res, 200, CreateAchievementResponseSchema, {
+    achievement: newAchievement,
+  });
 };
 
 export const getAllAchievementsHandler: RequestHandler<
@@ -47,7 +49,9 @@ export const getAllAchievementsHandler: RequestHandler<
 > = async (_req, res) => {
   const allAchievements = await achievementService.getAllAchievements();
 
-  respondWith(res, 200, GetAllAchievementsResponseSchema, allAchievements);
+  respondWith(res, 200, GetAllAchievementsResponseSchema, {
+    achievements: allAchievements,
+  });
 };
 
 export const getOneAchievementHandler: RequestHandler<
@@ -62,5 +66,7 @@ export const getOneAchievementHandler: RequestHandler<
     throw new EndpointError(400, 'Achievement not found');
   }
 
-  respondWith(res, 200, GetOneAchievementResponseSchema, achievement);
+  respondWith(res, 200, GetOneAchievementResponseSchema, {
+    achievement: achievement,
+  });
 };

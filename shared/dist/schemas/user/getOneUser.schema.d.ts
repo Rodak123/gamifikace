@@ -1,7 +1,7 @@
 import { z } from 'zod';
 export declare const GetOneUserRequestSchema: z.ZodObject<{
-    body: z.ZodOptional<z.ZodAny>;
-    query: z.ZodOptional<z.ZodAny>;
+    body: z.ZodObject<{}, z.core.$strip>;
+    query: z.ZodObject<{}, z.core.$strip>;
     params: z.ZodObject<{
         id: z.ZodString;
     }, z.core.$strip>;

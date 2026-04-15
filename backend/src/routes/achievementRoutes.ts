@@ -1,6 +1,4 @@
 import { Router } from 'express';
-import { validateWith } from '../middleware/validateWith.js';
-import { catchAsync } from '../middleware/catchAsync.js';
 import {
   CreateAchievementRequestSchema,
   ENDPOINTS,
@@ -12,24 +10,32 @@ import {
   createAchievementHandler,
   getOneAchievementHandler,
 } from '../controllers/achievementController.js';
+import { defineRoute } from '../utils/defineRoute.js';
 
 const achievementRoutes = Router();
 
-achievementRoutes.post(
-  ENDPOINTS.ACHIEVEMENT.GET_ALL(),
-  validateWith(GetAllAchievementsRequestSchema),
-  catchAsync(getAllAchievementsHandler)
-);
-achievementRoutes.post(
-  ENDPOINTS.ACHIEVEMENT.CREATE(),
-  validateWith(CreateAchievementRequestSchema),
-  catchAsync(createAchievementHandler)
-);
+defineRoute(achievementRoutes, {
+  method: 'post',
+  path: ENDPOINTS.ACHIEVEMENT.GET_ALL(),
+  isAuthenticated: false,
+  requestSchema: GetAllAchievementsRequestSchema,
+  fn: getAllAchievementsHandler,
+});
 
-achievementRoutes.post(
-  ENDPOINTS.ACHIEVEMENT.GET_ONE(':key'),
-  validateWith(GetOneAchievementRequestSchema),
-  catchAsync(getOneAchievementHandler)
-);
+defineRoute(achievementRoutes, {
+  method: 'post',
+  path: ENDPOINTS.ACHIEVEMENT.CREATE(),
+  isAuthenticated: false,
+  requestSchema: CreateAchievementRequestSchema,
+  fn: createAchievementHandler,
+});
+
+defineRoute(achievementRoutes, {
+  method: 'post',
+  path: ENDPOINTS.ACHIEVEMENT.GET_ONE(':key'),
+  isAuthenticated: false,
+  requestSchema: GetOneAchievementRequestSchema,
+  fn: getOneAchievementHandler,
+});
 
 export { achievementRoutes };

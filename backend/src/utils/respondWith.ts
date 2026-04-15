@@ -1,11 +1,14 @@
 import { Response } from 'express';
 import { z } from 'zod';
 
-export const respondWith = <T, S extends z.ZodType<{ success: true; data: T }>>(
+/**
+ * Valiadtes data using the schema and responds with the data and status code
+ */
+export const respondWith = <S extends z.ZodType<{ success: true; data: object }>>(
   res: Response,
   statusCode: 200 | 201,
   schema: S,
-  data: T
+  data: z.infer<S>['data']
 ) => {
   const safeResponse = schema.parse({
     success: true,

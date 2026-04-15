@@ -9,8 +9,11 @@ export const GetOneAchievementRequestSchema = BaseRequestSchema.extend({
   params: AchievementSchema.pick({ key: true }),
 });
 
-export const GetOneAchievementResponseSchema =
-  SuccessResponseSchema(AchievementSchema);
+export const GetOneAchievementResponseSchema = SuccessResponseSchema(
+  z.object({
+    achievement: AchievementSchema,
+  }),
+);
 
 type GetOneAchievementRequest = z.infer<typeof GetOneAchievementRequestSchema>;
 

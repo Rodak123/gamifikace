@@ -9,8 +9,11 @@ export const CreateAchievementRequestSchema = BaseRequestSchema.extend({
   body: AchievementSchema.omit({ createdAt: true }),
 });
 
-export const CreateAchievementResponseSchema =
-  SuccessResponseSchema(AchievementSchema);
+export const CreateAchievementResponseSchema = SuccessResponseSchema(
+  z.object({
+    achievement: AchievementSchema,
+  }),
+);
 
 type CreateAchievementRequest = z.infer<typeof CreateAchievementRequestSchema>;
 

@@ -2,6 +2,7 @@ const ROUTES = {
     ROOT: '',
     USER: '/user',
     ACHIEVEMENT: '/achievement',
+    AUTH: '/auth',
 };
 export const ENDPOINTS = {
     ROOT: {
@@ -13,6 +14,11 @@ export const ENDPOINTS = {
         GET_ONE: (key) => `${ROUTES.ACHIEVEMENT}/${key}`,
     },
     USER: {
-        GET_ONE: (id) => `${ROUTES.USER}/${id}`,
+        INFO: () => `${ROUTES.USER}/info`,
+    },
+    AUTH: {
+        LOGIN: () => `${ROUTES.AUTH}/login`,
+        LOGIN_DEV: () => `${ROUTES.AUTH}/loginDev`,
+        LOGOUT: () => `${ROUTES.AUTH}/logout`,
     },
 };

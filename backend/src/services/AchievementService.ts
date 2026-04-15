@@ -1,8 +1,12 @@
 import { PrismaClient } from '../generated/prisma/client.js';
-import { EndpointError } from '../middleware/errorHandler.js';
+import { EndpointError } from '../middleware/endpointError.js';
 
 export class AchievementService {
-  constructor(private readonly db: PrismaClient) {}
+  private readonly db: PrismaClient;
+
+  constructor(db: PrismaClient) {
+    this.db = db;
+  }
 
   public async createAchievement(key: string, name: string, description: string, xp: number) {
     const otherAchievement = await this.db.achievement.findFirst({

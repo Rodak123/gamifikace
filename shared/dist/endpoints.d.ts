@@ -8,6 +8,11 @@ export declare const ENDPOINTS: {
         readonly GET_ONE: (key: string) => `/achievement/${string}`;
     };
     readonly USER: {
-        readonly GET_ONE: (id: string) => `/user/${string}`;
+        readonly INFO: () => "/user/info";
+    };
+    readonly AUTH: {
+        readonly LOGIN: () => "/auth/login";
+        readonly LOGIN_DEV: () => "/auth/loginDev";
+        readonly LOGOUT: () => "/auth/logout";
     };
 };

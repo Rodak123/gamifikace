@@ -1,6 +1,6 @@
-import 'dotenv/config';
+/// <reference types="node" />
+import 'dotenv/config'; // because prisma runs this script itself
 import { defineConfig } from '@prisma/config';
-import process from 'node:process';
 
 const { DB_USER, DB_PASSWORD, DB_NAME, DB_DOCKER_PORT } = process.env;
 
