@@ -10,9 +10,3 @@ export declare const HealthResponseSchema: z.ZodObject<{
         database: z.ZodBoolean;
     }, z.core.$strip>;
 }, z.core.$strip>;
-type HealthRequest = z.infer<typeof HealthRequestSchema>;
-export type HealthBody = HealthRequest['body'];
-export type HealthParams = HealthRequest['params'];
-export type HealthQuery = HealthRequest['query'];
-export type HealthResponse = z.infer<typeof HealthResponseSchema>;
-export {};

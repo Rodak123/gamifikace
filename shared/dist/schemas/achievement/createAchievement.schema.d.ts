@@ -21,9 +21,3 @@ export declare const CreateAchievementResponseSchema: z.ZodObject<{
         }, z.core.$strip>;
     }, z.core.$strip>;
 }, z.core.$strip>;
-type CreateAchievementRequest = z.infer<typeof CreateAchievementRequestSchema>;
-export type CreateAchievementBody = CreateAchievementRequest['body'];
-export type CreateAchievementParams = CreateAchievementRequest['params'];
-export type CreateAchievementQuery = CreateAchievementRequest['query'];
-export type CreateAchievementResponse = z.infer<typeof CreateAchievementResponseSchema>;
-export {};

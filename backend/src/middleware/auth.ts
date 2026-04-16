@@ -3,10 +3,15 @@ import { UserService } from '../services/UserService';
 import { JWTService } from '../services/JWTService';
 import { prisma } from '../config/db';
 import { EndpointError } from './endpointError';
-import { AuthCookiesSchema, AuthenticatedRequest } from './authRequest';
+import { AuthCookiesSchema } from './authRequest';
+import { User } from '@gamifikace/shared';
 
 const userService = new UserService(prisma);
 const jwtService = new JWTService();
+
+export type AuthenticatedRequest<P, ResB, ReqB, ReqQ> = Request<P, ResB, ReqB, ReqQ> & {
+  user: User;
+};
 
 export const authenticateJWT = async <P, ResB, ReqB, ReqQ>(
   req: Request,

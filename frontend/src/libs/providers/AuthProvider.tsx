@@ -1,37 +1,75 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import type { AuthData } from '../types/auth';
-import type { User } from '@gamifikace/shared';
+import { ENDPOINTS, type User } from '@gamifikace/shared';
 import { env } from '../../config';
-import { useLogin, useLoginDev, useLogout } from '../../middleware/hooks/auth';
 import { type TokenResponse, useGoogleLogin } from '@react-oauth/google';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { apiClient } from '../../middleware';
 
 interface AuthProviderProps {
   children: React.ReactNode;
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [authData, setAuthData] = useState<AuthData>({
-    isAuthenticated: false,
+  const queryClient = useQueryClient();
+
+  const userQuery = useQuery({
+    queryKey: ['user'],
+    queryFn: () =>
+      apiClient.request(ENDPOINTS.USER.INFO, { body: {}, params: {} }),
+    retry: false,
   });
 
-  const [user, setUser] = useState<User | null>(null);
+  const authData: AuthData = useMemo(
+    () => ({
+      isAuthenticated: userQuery.isSuccess && !!userQuery.data,
+    }),
+    [userQuery.isSuccess, userQuery.data],
+  );
 
-  const loginMutation = useLogin();
-  const loginDevMutation = useLoginDev();
-  const logoutMutation = useLogout();
+  const loggedUser = (userQuery.data?.user as User) || null;
+
+  const loginMutation = useMutation({
+    mutationKey: ['login'],
+    mutationFn: (credential: string) =>
+      apiClient.request(ENDPOINTS.AUTH.LOGIN, {
+        body: { credential },
+        params: {},
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['user'] });
+    },
+  });
+
+  const loginDevMutation = useMutation({
+    mutationKey: ['loginDev'],
+    mutationFn: () =>
+      apiClient.request(ENDPOINTS.AUTH.LOGIN_DEV, {
+        body: {},
+        params: {},
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['user'] });
+    },
+  });
+
+  const logoutMutation = useMutation({
+    mutationKey: ['logout'],
+    mutationFn: () =>
+      apiClient.request(ENDPOINTS.AUTH.LOGOUT, {
+        body: {},
+        params: {},
+      }),
+    onSuccess: () => {
+      queryClient.setQueryData(['user'], null);
+      queryClient.invalidateQueries({ queryKey: ['user'] });
+    },
+  });
 
   const usedGoogleLogin = useGoogleLogin({
     onSuccess: async (tokenResponse: TokenResponse) => {
-      try {
-        const data = await loginMutation.mutateAsync(
-          tokenResponse.access_token,
-        );
-        setUser(data?.user);
-        setAuthData({ ...authData, isAuthenticated: true });
-      } catch (error) {
-        console.error('Failed to login with backend', error);
-      }
+      loginMutation.mutate(tokenResponse.access_token);
     },
     onError: () => {
       console.error('Failed to login with Google');
@@ -40,34 +78,22 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const login = useCallback(async () => {
     if (env.VITE_NODE_ENV === 'development') {
-      try {
-        const data = await loginDevMutation.mutateAsync();
-        setUser(data?.user);
-        setAuthData({ ...authData, isAuthenticated: true });
-      } catch (error) {
-        console.error('Dev login failed', error);
-      }
+      loginDevMutation.mutate();
     } else {
       usedGoogleLogin();
     }
-  }, [loginDevMutation, usedGoogleLogin, authData]);
+  }, [usedGoogleLogin, loginDevMutation]);
 
   const logout = useCallback(async () => {
-    try {
-      await logoutMutation.mutateAsync();
-      setAuthData({ ...authData, isAuthenticated: false });
-      setUser(null);
-    } catch (error) {
-      console.error('Logout failed', error);
-    }
-  }, [logoutMutation, authData]);
+    logoutMutation.mutate();
+  }, [logoutMutation]);
 
   return (
     <AuthContext.Provider
       value={{
         login,
         logout,
-        user,
+        loggedUser,
         authData,
       }}
     >

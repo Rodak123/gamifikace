@@ -1,36 +1,22 @@
 import { Router } from 'express';
-import {
-  DevLoginRequestSchema,
-  ENDPOINTS,
-  LoginRequestSchema,
-  LogoutRequestSchema,
-} from '@gamifikace/shared';
+import { ENDPOINTS } from '@gamifikace/shared';
 import { devloginHandler, loginHandler, logoutHandler } from '../controllers/authController.js';
 import { defineRoute } from '../utils/defineRoute.js';
 
 const authRoutes = Router();
 
 defineRoute(authRoutes, {
-  method: 'post',
-  path: ENDPOINTS.AUTH.LOGIN(),
-  isAuthenticated: false,
-  requestSchema: LoginRequestSchema,
+  definition: ENDPOINTS.AUTH.LOGIN,
   fn: loginHandler,
 });
 
 defineRoute(authRoutes, {
-  method: 'post',
-  path: ENDPOINTS.AUTH.LOGIN_DEV(),
-  isAuthenticated: false,
-  requestSchema: DevLoginRequestSchema,
+  definition: ENDPOINTS.AUTH.LOGIN_DEV,
   fn: devloginHandler,
 });
 
 defineRoute(authRoutes, {
-  method: 'post',
-  path: ENDPOINTS.AUTH.LOGOUT(),
-  isAuthenticated: true,
-  requestSchema: LogoutRequestSchema,
+  definition: ENDPOINTS.AUTH.LOGOUT,
   fn: logoutHandler,
 });
 

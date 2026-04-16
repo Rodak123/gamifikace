@@ -1,14 +1,7 @@
-import {
-  HealthParams,
-  HealthResponse,
-  HealthBody,
-  HealthQuery,
-  HealthResponseSchema,
-} from '@gamifikace/shared';
-import { RequestHandler } from 'express';
-import { respondWith } from '../utils/respondWith';
+import { ENDPOINTS } from '@gamifikace/shared';
 import { checkDatabase } from '../config/db';
 import { env } from '../config/env';
+import { TypedRequestHandler } from '../utils/typedRequestHandler';
 
 const getDBHealth = async () => {
   try {
@@ -22,15 +15,10 @@ const getDBHealth = async () => {
   }
 };
 
-export const getHealthHandler: RequestHandler<
-  HealthParams,
-  HealthResponse,
-  HealthBody,
-  HealthQuery
-> = async (_req, res) => {
+export const getHealthHandler: TypedRequestHandler<typeof ENDPOINTS.ROOT.HEALTH> = async () => {
   const dbHealthy = await getDBHealth();
 
-  respondWith(res, 200, HealthResponseSchema, {
+  return {
     database: dbHealthy,
-  });
+  };
 };

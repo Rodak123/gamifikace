@@ -1,55 +1,76 @@
-import { RequestHandler, Router } from 'express';
+import { RequestHandler, Router, Request, Response, NextFunction } from 'express';
 import { authenticateJWT } from '../middleware/auth';
-import { ZodObject } from 'zod';
-import { validateWith } from './validateWith';
-import { catchAsync } from './catchAsync';
-import { ParamsDictionary, Query } from 'express-serve-static-core';
-import { AuthenticatedRequestHandler } from '../middleware/authRequest';
+import { BaseRequestSchemaType, Endpoint, SuccessRespoonseSchemaType } from '@gamifikace/shared';
+import { ZodType } from 'zod';
+import { TypedRequestHandler } from './typedRequestHandler';
 
-interface RouteBase {
-  path: string;
-  method: 'get' | 'post';
-  requestSchema: ZodObject;
+export interface Route<
+  E extends Endpoint<BaseRequestSchemaType, SuccessRespoonseSchemaType, boolean>,
+> {
+  definition: E;
+  fn: TypedRequestHandler<E>;
 }
 
-interface BasicRoute<P, ResB, ReqB, ReqQ> extends RouteBase {
-  isAuthenticated: false;
-  fn: RequestHandler<P, ResB, ReqB, ReqQ>;
-}
+const validateWith = (schema: ZodType): RequestHandler => {
+  return async (req, _res, next) => {
+    try {
+      await schema.parseAsync({
+        body: req.body,
+        query: req.query,
+        params: req.params,
+      });
+      next();
+    } catch (error) {
+      next(error);
+    }
+  };
+};
 
-interface AuthenticatedRoute<P, ResB, ReqB, ReqQ> extends RouteBase {
-  isAuthenticated: true;
-  fn: AuthenticatedRequestHandler<P, ResB, ReqB, ReqQ>;
-}
+const catchAsync = <TReq, TRes>(
+  fn: (req: TReq, res: TRes, next: NextFunction) => Promise<void> | void
+): RequestHandler<TReq, TRes> => {
+  return (req, res, next) => {
+    Promise.resolve(fn(req as unknown as TReq, res as unknown as TRes, next)).catch(next);
+  };
+};
 
-export type Route<P, ResB, ReqB, ReqQ> =
-  | BasicRoute<P, ResB, ReqB, ReqQ>
-  | AuthenticatedRoute<P, ResB, ReqB, ReqQ>;
-
-/**
- * Defines a route
- * - path - endpoint path
- * - method - allowed method
- * - isAuthenticated - whether to validate auth token
- * - requestSchema - zod schema which validates request data
- * - fn - the endpoint function
- */
-export const defineRoute = <P extends ParamsDictionary, ResB, ReqB, ReqQ extends Query>(
+export const defineRoute = <
+  E extends Endpoint<BaseRequestSchemaType, SuccessRespoonseSchemaType, boolean>,
+>(
   router: Router,
-  route: Route<P, ResB, ReqB, ReqQ>
+  route: Route<E>
 ) => {
-  const routeHandlers = [
-    validateWith(route.requestSchema), // validate zod schema
-    route.isAuthenticated && catchAsync(authenticateJWT), // authenticate
-    catchAsync(route.fn), // process endpoint
-  ].filter((handler) => !!handler);
+  const routeFunction: RequestHandler = async (req, res, next) => {
+    try {
+      const data = await route.fn(
+        req as Parameters<TypedRequestHandler<E>>[0],
+        res as Parameters<TypedRequestHandler<E>>[1],
+        next as Parameters<TypedRequestHandler<E>>[2]
+      ); // stfu typescript
 
-  switch (route.method) {
+      if (!res.headersSent) {
+        res.status(200).json({
+          success: true,
+          data: data,
+        });
+      }
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  const routeHandlers = [
+    validateWith(route.definition.requestSchema),
+    route.definition.auth.isAuthenticated ? catchAsync(authenticateJWT) : null,
+    catchAsync(routeFunction),
+  ].filter((handler): handler is RequestHandler => handler !== null);
+
+  switch (route.definition.method) {
     case 'get':
-      router.get(route.path, ...routeHandlers);
+      router.get(route.definition.path, ...routeHandlers);
       break;
     case 'post':
-      router.post(route.path, ...routeHandlers);
+      router.post(route.definition.path, ...routeHandlers);
       break;
   }
 };

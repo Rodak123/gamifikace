@@ -1,31 +1,19 @@
 import {
-  LoginParams,
-  LoginResponse,
-  LoginBody,
-  LoginQuery,
   LoginResponseSchema,
-  DevLoginBody,
-  DevLoginParams,
-  DevLoginQuery,
-  DevLoginResponse,
   DevLoginResponseSchema,
   User,
-  LogoutBody,
-  LogoutParams,
-  LogoutQuery,
-  LogoutResponse,
   LogoutResponseSchema,
+  ENDPOINTS,
 } from '@gamifikace/shared';
-import { RequestHandler } from 'express';
 import { prisma } from '../config/db';
-import { respondWith } from '../utils/respondWith';
 import { UserService } from '../services/UserService';
 import { OAuth2Client } from 'google-auth-library';
 import { env } from '../config/env';
 import { JWTService } from '../services/JWTService';
 import { Response } from 'express';
 import { EndpointError } from '../middleware/endpointError';
-import { AUTH_COOKIE_NAME, AuthenticatedRequestHandler } from '../middleware/authRequest';
+import { AUTH_COOKIE_NAME } from '../middleware/authRequest';
+import { TypedRequestHandler } from '../utils/typedRequestHandler';
 
 const userService = new UserService(prisma);
 const jwtService = new JWTService();
@@ -42,12 +30,7 @@ const loginWithUser = (res: Response, user: User) => {
   });
 };
 
-export const loginHandler: RequestHandler<
-  LoginParams,
-  LoginResponse,
-  LoginBody,
-  LoginQuery
-> = async (req, res) => {
+export const loginHandler: TypedRequestHandler<typeof ENDPOINTS.AUTH.LOGIN> = async (req, res) => {
   const ticket = await oauthClient.verifyIdToken({
     idToken: req.body.credential,
     audience: env.GOOGLE_CLIENT_ID,
@@ -67,17 +50,15 @@ export const loginHandler: RequestHandler<
 
   loginWithUser(res, user);
 
-  respondWith(res, 200, LoginResponseSchema, {
+  return {
     user,
-  });
+  };
 };
 
-export const devloginHandler: RequestHandler<
-  DevLoginParams,
-  DevLoginResponse,
-  DevLoginBody,
-  DevLoginQuery
-> = async (_req, res) => {
+export const devloginHandler: TypedRequestHandler<typeof ENDPOINTS.AUTH.LOGIN_DEV> = async (
+  _req,
+  res
+) => {
   if (env.NODE_ENV !== 'development') {
     throw new EndpointError(403, 'Development login is not available');
   }
@@ -98,20 +79,18 @@ export const devloginHandler: RequestHandler<
 
   loginWithUser(res, user);
 
-  respondWith(res, 200, DevLoginResponseSchema, {
+  return {
     user,
-  });
+  };
 };
 
-export const logoutHandler: AuthenticatedRequestHandler<
-  LogoutParams,
-  LogoutResponse,
-  LogoutBody,
-  LogoutQuery
-> = async (_req, res) => {
+export const logoutHandler: TypedRequestHandler<typeof ENDPOINTS.AUTH.LOGOUT> = async (
+  _req,
+  res
+) => {
   res.clearCookie(AUTH_COOKIE_NAME);
 
-  respondWith(res, 200, LogoutResponseSchema, {
+  return {
     loggedOut: true,
-  });
+  };
 };

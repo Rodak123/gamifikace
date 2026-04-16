@@ -4,10 +4,15 @@ export const BaseRequestSchema = z.object({
     params: z.object(),
     query: z.object(),
 });
-export const SuccessResponseSchema = (dataSchema) => z.object({
+export const SuccessResponseSchema = z.object({
     success: z.literal(true),
-    data: dataSchema,
+    data: z.any(),
 });
+export const SuccessResponseSchemaWithData = (dataSchema) => {
+    return SuccessResponseSchema.extend({
+        data: dataSchema,
+    });
+};
 export const ErrorResponseSchema = z.object({
     success: z.literal(false),
     message: z.string(),

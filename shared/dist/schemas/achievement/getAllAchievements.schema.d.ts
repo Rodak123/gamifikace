@@ -16,9 +16,3 @@ export declare const GetAllAchievementsResponseSchema: z.ZodObject<{
         }, z.core.$strip>>;
     }, z.core.$strip>;
 }, z.core.$strip>;
-type GetAllAchievementsRequest = z.infer<typeof GetAllAchievementsRequestSchema>;
-export type GetAllAchievementsBody = GetAllAchievementsRequest['body'];
-export type GetAllAchievementsParams = GetAllAchievementsRequest['params'];
-export type GetAllAchievementsQuery = GetAllAchievementsRequest['query'];
-export type GetAllAchievementsResponse = z.infer<typeof GetAllAchievementsResponseSchema>;
-export {};

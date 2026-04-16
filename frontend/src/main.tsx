@@ -5,6 +5,7 @@ import { RouterProvider } from 'react-router';
 import { router } from './router';
 import { ThemeProvider } from './libs/providers/ThemeProvider';
 import { QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import { queryClient } from './config/queryClient';
 import { AuthProvider } from './libs/providers/AuthProvider';
@@ -21,6 +22,7 @@ createRoot(document.getElementById('root')!).render(
           </AuthProvider>
         </GoogleOAuthProvider>
       </ThemeProvider>
+      {env.VITE_NODE_ENV === 'development' && <ReactQueryDevtools />}
     </QueryClientProvider>
   </StrictMode>,
 );

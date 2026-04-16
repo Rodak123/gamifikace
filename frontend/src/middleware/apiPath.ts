@@ -1,4 +1,4 @@
-import { env } from '../../config';
+import { env } from '../config';
 
 export const API_PATH = (() => {
   const path = (env.VITE_API_PATH as string).trim();

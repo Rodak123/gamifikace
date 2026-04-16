@@ -1,3 +1,5 @@
+import { CreateAchievementRequestSchema, CreateAchievementResponseSchema, DevLoginRequestSchema, DevLoginResponseSchema, GetAllAchievementsRequestSchema, GetAllAchievementsResponseSchema, GetOneAchievementRequestSchema, GetOneAchievementResponseSchema, GetUserInfoRequestSchema, GetUserInfoResponseSchema, HealthRequestSchema, HealthResponseSchema, LoginRequestSchema, LoginResponseSchema, LogoutRequestSchema, LogoutResponseSchema, } from './schemas';
+const createEndpoint = (endpoint) => endpoint;
 const ROUTES = {
     ROOT: '',
     USER: '/user',
@@ -6,19 +8,67 @@ const ROUTES = {
 };
 export const ENDPOINTS = {
     ROOT: {
-        HEALTH: () => `${ROUTES.ROOT}/health`,
+        HEALTH: createEndpoint({
+            path: `${ROUTES.ROOT}/health`,
+            requestSchema: HealthRequestSchema,
+            responseSchema: HealthResponseSchema,
+            method: 'get',
+            auth: { isAuthenticated: false },
+        }),
     },
     ACHIEVEMENT: {
-        GET_ALL: () => `${ROUTES.ACHIEVEMENT}/all`,
-        CREATE: () => `${ROUTES.ACHIEVEMENT}/create`,
-        GET_ONE: (key) => `${ROUTES.ACHIEVEMENT}/${key}`,
+        GET_ALL: createEndpoint({
+            path: `${ROUTES.ACHIEVEMENT}/all`,
+            requestSchema: GetAllAchievementsRequestSchema,
+            responseSchema: GetAllAchievementsResponseSchema,
+            method: 'post',
+            auth: { isAuthenticated: false },
+        }),
+        CREATE: createEndpoint({
+            path: `${ROUTES.ACHIEVEMENT}/create`,
+            requestSchema: CreateAchievementRequestSchema,
+            responseSchema: CreateAchievementResponseSchema,
+            method: 'post',
+            auth: { isAuthenticated: false },
+        }),
+        GET_ONE: createEndpoint({
+            path: `${ROUTES.ACHIEVEMENT}/:key`,
+            requestSchema: GetOneAchievementRequestSchema,
+            responseSchema: GetOneAchievementResponseSchema,
+            method: 'post',
+            auth: { isAuthenticated: false },
+        }),
     },
     USER: {
-        INFO: () => `${ROUTES.USER}/info`,
+        INFO: createEndpoint({
+            path: `${ROUTES.USER}/info`,
+            requestSchema: GetUserInfoRequestSchema,
+            responseSchema: GetUserInfoResponseSchema,
+            method: 'post',
+            auth: { isAuthenticated: true },
+        }),
     },
     AUTH: {
-        LOGIN: () => `${ROUTES.AUTH}/login`,
-        LOGIN_DEV: () => `${ROUTES.AUTH}/loginDev`,
-        LOGOUT: () => `${ROUTES.AUTH}/logout`,
+        LOGIN: createEndpoint({
+            path: `${ROUTES.AUTH}/login`,
+            requestSchema: LoginRequestSchema,
+            responseSchema: LoginResponseSchema,
+            method: 'post',
+            auth: { isAuthenticated: false },
+        }),
+        LOGIN_DEV: createEndpoint({
+            path: `${ROUTES.AUTH}/loginDev`,
+            requestSchema: DevLoginRequestSchema,
+            responseSchema: DevLoginResponseSchema,
+            method: 'post',
+            auth: { isAuthenticated: false },
+        }),
+        LOGOUT: createEndpoint({
+            path: `${ROUTES.AUTH}/logout`,
+            requestSchema: LogoutRequestSchema,
+            responseSchema: LogoutResponseSchema,
+            method: 'post',
+            auth: { isAuthenticated: true },
+        }),
     },
 };

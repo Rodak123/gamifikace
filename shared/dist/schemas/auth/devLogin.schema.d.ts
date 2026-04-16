@@ -17,9 +17,3 @@ export declare const DevLoginResponseSchema: z.ZodObject<{
         }, z.core.$strip>;
     }, z.core.$strip>;
 }, z.core.$strip>;
-type DevLoginRequest = z.infer<typeof DevLoginRequestSchema>;
-export type DevLoginBody = DevLoginRequest['body'];
-export type DevLoginParams = DevLoginRequest['params'];
-export type DevLoginQuery = DevLoginRequest['query'];
-export type DevLoginResponse = z.infer<typeof DevLoginResponseSchema>;
-export {};

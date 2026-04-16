@@ -1,34 +1,14 @@
-import { RequestHandler } from 'express';
 import { prisma } from '../config/db.js';
-import { respondWith } from '../utils/respondWith.js';
 import { AchievementService } from '../services/AchievementService.js';
-import {
-  CreateAchievementParams,
-  CreateAchievementResponse,
-  CreateAchievementBody,
-  CreateAchievementQuery,
-  CreateAchievementResponseSchema,
-  GetOneAchievementParams,
-  GetOneAchievementResponse,
-  GetOneAchievementBody,
-  GetOneAchievementQuery,
-  GetOneAchievementResponseSchema,
-  GetAllAchievementsBody,
-  GetAllAchievementsParams,
-  GetAllAchievementsQuery,
-  GetAllAchievementsResponse,
-  GetAllAchievementsResponseSchema,
-} from '@gamifikace/shared';
+import { ENDPOINTS } from '@gamifikace/shared';
 import { EndpointError } from '../middleware/endpointError.js';
+import { TypedRequestHandler } from '../utils/typedRequestHandler.js';
 
 const achievementService = new AchievementService(prisma);
 
-export const createAchievementHandler: RequestHandler<
-  CreateAchievementParams,
-  CreateAchievementResponse,
-  CreateAchievementBody,
-  CreateAchievementQuery
-> = async (req, res) => {
+export const createAchievementHandler: TypedRequestHandler<
+  typeof ENDPOINTS.ACHIEVEMENT.CREATE
+> = async (req) => {
   const newAchievement = await achievementService.createAchievement(
     req.body.key,
     req.body.name,
@@ -36,37 +16,31 @@ export const createAchievementHandler: RequestHandler<
     req.body.xp
   );
 
-  respondWith(res, 200, CreateAchievementResponseSchema, {
+  return {
     achievement: newAchievement,
-  });
+  };
 };
 
-export const getAllAchievementsHandler: RequestHandler<
-  GetAllAchievementsParams,
-  GetAllAchievementsResponse,
-  GetAllAchievementsBody,
-  GetAllAchievementsQuery
-> = async (_req, res) => {
+export const getAllAchievementsHandler: TypedRequestHandler<
+  typeof ENDPOINTS.ACHIEVEMENT.GET_ALL
+> = async () => {
   const allAchievements = await achievementService.getAllAchievements();
 
-  respondWith(res, 200, GetAllAchievementsResponseSchema, {
+  return {
     achievements: allAchievements,
-  });
+  };
 };
 
-export const getOneAchievementHandler: RequestHandler<
-  GetOneAchievementParams,
-  GetOneAchievementResponse,
-  GetOneAchievementBody,
-  GetOneAchievementQuery
-> = async (req, res) => {
+export const getOneAchievementHandler: TypedRequestHandler<
+  typeof ENDPOINTS.ACHIEVEMENT.GET_ONE
+> = async (req) => {
   const achievement = await achievementService.getOneAchievement(req.params.key);
 
   if (achievement === null) {
     throw new EndpointError(400, 'Achievement not found');
   }
 
-  respondWith(res, 200, GetOneAchievementResponseSchema, {
+  return {
     achievement: achievement,
-  });
+  };
 };

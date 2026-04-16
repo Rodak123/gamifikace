@@ -1,4 +1,4 @@
-import { BaseRequestSchema, SuccessResponseSchema, } from '../baseEndpont.schema';
+import { BaseRequestSchema, SuccessResponseSchemaWithData, } from '../baseEndpont.schema';
 import { z } from 'zod';
 import { UserSchema } from '../user/user.schema';
 export const LoginRequestSchema = BaseRequestSchema.extend({
@@ -6,6 +6,6 @@ export const LoginRequestSchema = BaseRequestSchema.extend({
         credential: z.string().min(1),
     }),
 });
-export const LoginResponseSchema = SuccessResponseSchema(z.object({
+export const LoginResponseSchema = SuccessResponseSchemaWithData(z.object({
     user: UserSchema,
 }));

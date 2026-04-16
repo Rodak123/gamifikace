@@ -1,22 +1,10 @@
-import {
-  GetUserInfoBody,
-  GetUserInfoParams,
-  GetUserInfoQuery,
-  GetUserInfoResponse,
-  GetUserInfoResponseSchema,
-} from '@gamifikace/shared';
-import { respondWith } from '../utils/respondWith';
-import { AuthenticatedRequestHandler } from '../middleware/authRequest';
+import { ENDPOINTS } from '@gamifikace/shared';
+import { TypedRequestHandler } from '../utils/typedRequestHandler';
 
-export const getUserInfoHandler: AuthenticatedRequestHandler<
-  GetUserInfoParams,
-  GetUserInfoResponse,
-  GetUserInfoBody,
-  GetUserInfoQuery
-> = async (req, res) => {
+export const getUserInfoHandler: TypedRequestHandler<typeof ENDPOINTS.USER.INFO> = async (req) => {
   const user = req.user;
 
-  respondWith(res, 200, GetUserInfoResponseSchema, {
+  return {
     user: user,
-  });
+  };
 };

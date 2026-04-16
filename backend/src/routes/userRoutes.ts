@@ -6,10 +6,8 @@ import { defineRoute } from '../utils/defineRoute.js';
 const userRoutes = Router();
 
 defineRoute(userRoutes, {
-  method: 'post',
-  path: ENDPOINTS.USER.INFO(),
+  definition: ENDPOINTS.USER.INFO,
   isAuthenticated: true,
-  requestSchema: GetUserInfoRequestSchema,
   fn: getUserInfoHandler,
 });
 

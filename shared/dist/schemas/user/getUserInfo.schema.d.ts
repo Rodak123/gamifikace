@@ -17,9 +17,3 @@ export declare const GetUserInfoResponseSchema: z.ZodObject<{
         }, z.core.$strip>;
     }, z.core.$strip>;
 }, z.core.$strip>;
-type GetUserInfoRequest = z.infer<typeof GetUserInfoRequestSchema>;
-export type GetUserInfoBody = GetUserInfoRequest['body'];
-export type GetUserInfoParams = GetUserInfoRequest['params'];
-export type GetUserInfoQuery = GetUserInfoRequest['query'];
-export type GetUserInfoResponse = z.infer<typeof GetUserInfoResponseSchema>;
-export {};

@@ -19,9 +19,3 @@ export declare const LoginResponseSchema: z.ZodObject<{
         }, z.core.$strip>;
     }, z.core.$strip>;
 }, z.core.$strip>;
-type LoginRequest = z.infer<typeof LoginRequestSchema>;
-export type LoginBody = LoginRequest['body'];
-export type LoginParams = LoginRequest['params'];
-export type LoginQuery = LoginRequest['query'];
-export type LoginResponse = z.infer<typeof LoginResponseSchema>;
-export {};

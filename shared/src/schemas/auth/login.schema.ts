@@ -1,6 +1,6 @@
 import {
   BaseRequestSchema,
-  SuccessResponseSchema,
+  SuccessResponseSchemaWithData,
 } from '../baseEndpont.schema';
 import { z } from 'zod';
 import { UserSchema } from '../user/user.schema';
@@ -11,16 +11,8 @@ export const LoginRequestSchema = BaseRequestSchema.extend({
   }),
 });
 
-export const LoginResponseSchema = SuccessResponseSchema(
+export const LoginResponseSchema = SuccessResponseSchemaWithData(
   z.object({
     user: UserSchema,
   }),
 );
-
-type LoginRequest = z.infer<typeof LoginRequestSchema>;
-
-export type LoginBody = LoginRequest['body'];
-export type LoginParams = LoginRequest['params'];
-export type LoginQuery = LoginRequest['query'];
-
-export type LoginResponse = z.infer<typeof LoginResponseSchema>;

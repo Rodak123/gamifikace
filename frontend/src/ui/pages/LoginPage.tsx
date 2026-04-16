@@ -1,33 +1,29 @@
+import { Navigate, useLocation } from 'react-router';
 import { useAuth } from '../../libs/hooks/useAuth';
-import { Button } from '../components/Button';
+import { LoginButton } from '../components/LoginButton';
 import { Typography } from '../components/Typography';
 import { DefaultLayout } from './layouts/DefaultLayout';
+import { ROUTES } from '../../router';
 
 export const LoginPage: React.FC = () => {
-  const { login, user } = useAuth();
+  const { authData } = useAuth();
+  const location = useLocation();
 
-  const handleLogin = () => {
-    login();
-  };
+  if (authData.isAuthenticated) {
+    const origin = location.state?.from?.pathname || ROUTES.HOME;
+    return <Navigate to={origin} replace />;
+  }
 
   return (
     <DefaultLayout>
-      <Typography variant='h1' size='5xl' className='text-center'>
-        Login
-      </Typography>
-      <Button
-        className='justify-center'
-        variant='primary'
-        size='md'
-        onClick={handleLogin}
-      >
-        Sign In with Google
-      </Button>
-      {user !== null && (
-        <Typography>
-          {user.email} {user.nickname}
-        </Typography>
-      )}
+      <div className='w-full grow flex justify-center items-center'>
+        <div className='flex flex-col gap-4 p-4 border border-primary rounded-2xl'>
+          <Typography variant='h1' size='6xl' className='text-center'>
+            Login
+          </Typography>
+          <LoginButton />
+        </div>
+      </div>
     </DefaultLayout>
   );
 };
