@@ -4,9 +4,9 @@ export declare const CreateAchievementRequestSchema: z.ZodObject<{
     query: z.ZodObject<{}, z.core.$strip>;
     body: z.ZodObject<{
         key: z.ZodString;
+        description: z.ZodString;
         xp: z.ZodNumber;
         name: z.ZodString;
-        description: z.ZodString;
     }, z.core.$strip>;
 }, z.core.$strip>;
 export declare const CreateAchievementResponseSchema: z.ZodObject<{

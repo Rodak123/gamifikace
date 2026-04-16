@@ -1,4 +1,4 @@
-import { RequestHandler, Router, Request, Response, NextFunction } from 'express';
+import { RequestHandler, Router, NextFunction } from 'express';
 import { authenticateJWT } from '../middleware/auth';
 import { BaseRequestSchemaType, Endpoint, SuccessRespoonseSchemaType } from '@gamifikace/shared';
 import { ZodType } from 'zod';

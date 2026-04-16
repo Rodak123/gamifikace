@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router';
 import { useAuth } from '../../libs/hooks/useAuth';
 import { Button } from './Button';
-import { ROUTES } from '../../router';
+import { ROUTES } from '../../routes';
 
 export const LogoutButton: React.FC = () => {
   const { logout } = useAuth();

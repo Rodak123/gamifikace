@@ -5,9 +5,9 @@ import {
 import { UserSchema } from './user.schema';
 import { z } from 'zod';
 
-export const GetUserInfoRequestSchema = BaseRequestSchema.extend({});
+export const GetMeInfoRequestSchema = BaseRequestSchema;
 
-export const GetUserInfoResponseSchema = SuccessResponseSchemaWithData(
+export const GetMeInfoResponseSchema = SuccessResponseSchemaWithData(
   z.object({
     user: UserSchema,
   }),

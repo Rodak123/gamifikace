@@ -7,7 +7,6 @@ const rootRoutes = Router();
 
 defineRoute(rootRoutes, {
   definition: ENDPOINTS.ROOT.HEALTH,
-  isAuthenticated: false,
   fn: getHealthHandler,
 });
 

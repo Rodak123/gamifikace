@@ -5,7 +5,7 @@ import {
 import { z } from 'zod';
 import { UserSchema } from '../user/user.schema';
 
-export const DevLoginRequestSchema = BaseRequestSchema.extend({});
+export const DevLoginRequestSchema = BaseRequestSchema;
 
 export const DevLoginResponseSchema = SuccessResponseSchemaWithData(
   z.object({

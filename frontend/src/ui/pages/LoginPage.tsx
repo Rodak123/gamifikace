@@ -3,7 +3,7 @@ import { useAuth } from '../../libs/hooks/useAuth';
 import { LoginButton } from '../components/LoginButton';
 import { Typography } from '../components/Typography';
 import { DefaultLayout } from './layouts/DefaultLayout';
-import { ROUTES } from '../../router';
+import { ROUTES } from '../../routes';
 
 export const LoginPage: React.FC = () => {
   const { authData } = useAuth();

@@ -1,4 +1,4 @@
-import { CreateAchievementRequestSchema, CreateAchievementResponseSchema, DevLoginRequestSchema, DevLoginResponseSchema, GetAllAchievementsRequestSchema, GetAllAchievementsResponseSchema, GetOneAchievementRequestSchema, GetOneAchievementResponseSchema, GetUserInfoRequestSchema, GetUserInfoResponseSchema, HealthRequestSchema, HealthResponseSchema, LoginRequestSchema, LoginResponseSchema, LogoutRequestSchema, LogoutResponseSchema, } from './schemas';
+import { CreateAchievementRequestSchema, CreateAchievementResponseSchema, DevLoginRequestSchema, DevLoginResponseSchema, GetAllAchievementsRequestSchema, GetAllAchievementsResponseSchema, GetOneAchievementRequestSchema, GetOneAchievementResponseSchema, GetMeInfoRequestSchema, GetMeInfoResponseSchema, HealthRequestSchema, HealthResponseSchema, LoginRequestSchema, LoginResponseSchema, LogoutRequestSchema, LogoutResponseSchema, } from './schemas';
 const createEndpoint = (endpoint) => endpoint;
 const ROUTES = {
     ROOT: '',
@@ -38,12 +38,19 @@ export const ENDPOINTS = {
             method: 'post',
             auth: { isAuthenticated: false },
         }),
+        EARN: createEndpoint({
+            path: `${ROUTES.ACHIEVEMENT}/earn`,
+            requestSchema: GetOneAchievementRequestSchema,
+            responseSchema: GetOneAchievementResponseSchema,
+            method: 'post',
+            auth: { isAuthenticated: false },
+        }),
     },
     USER: {
-        INFO: createEndpoint({
-            path: `${ROUTES.USER}/info`,
-            requestSchema: GetUserInfoRequestSchema,
-            responseSchema: GetUserInfoResponseSchema,
+        ME: createEndpoint({
+            path: `${ROUTES.USER}/me`,
+            requestSchema: GetMeInfoRequestSchema,
+            responseSchema: GetMeInfoResponseSchema,
             method: 'post',
             auth: { isAuthenticated: true },
         }),

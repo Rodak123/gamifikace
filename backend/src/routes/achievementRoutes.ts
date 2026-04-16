@@ -11,19 +11,16 @@ const achievementRoutes = Router();
 
 defineRoute(achievementRoutes, {
   definition: ENDPOINTS.ACHIEVEMENT.GET_ALL,
-  isAuthenticated: false,
   fn: getAllAchievementsHandler,
 });
 
 defineRoute(achievementRoutes, {
   definition: ENDPOINTS.ACHIEVEMENT.CREATE,
-  isAuthenticated: false,
   fn: createAchievementHandler,
 });
 
 defineRoute(achievementRoutes, {
   definition: ENDPOINTS.ACHIEVEMENT.GET_ONE,
-  isAuthenticated: false,
   fn: getOneAchievementHandler,
 });
 

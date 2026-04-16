@@ -17,7 +17,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const userQuery = useQuery({
     queryKey: ['user'],
     queryFn: () =>
-      apiClient.request(ENDPOINTS.USER.INFO, { body: {}, params: {} }),
+      apiClient.request(ENDPOINTS.USER.ME, { body: {}, params: {} }),
     retry: false,
   });
 

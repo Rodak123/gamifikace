@@ -68,9 +68,27 @@ export declare const ENDPOINTS: {
                 }, import("zod/v4/core").$strip>;
             }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, false>;
+        readonly EARN: Endpoint<import("zod").ZodObject<{
+            body: import("zod").ZodObject<{}, import("zod/v4/core").$strip>;
+            query: import("zod").ZodObject<{}, import("zod/v4/core").$strip>;
+            params: import("zod").ZodObject<{
+                key: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            success: import("zod").ZodLiteral<true>;
+            data: import("zod").ZodObject<{
+                achievement: import("zod").ZodObject<{
+                    key: import("zod").ZodString;
+                    xp: import("zod").ZodNumber;
+                    name: import("zod").ZodString;
+                    description: import("zod").ZodString;
+                    createdAt: import("zod").ZodDate;
+                }, import("zod/v4/core").$strip>;
+            }, import("zod/v4/core").$strip>;
+        }, import("zod/v4/core").$strip>, false>;
     };
     readonly USER: {
-        readonly INFO: Endpoint<import("zod").ZodObject<{
+        readonly ME: Endpoint<import("zod").ZodObject<{
             body: import("zod").ZodObject<{}, import("zod/v4/core").$strip>;
             params: import("zod").ZodObject<{}, import("zod/v4/core").$strip>;
             query: import("zod").ZodObject<{}, import("zod/v4/core").$strip>;

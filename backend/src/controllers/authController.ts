@@ -1,10 +1,4 @@
-import {
-  LoginResponseSchema,
-  DevLoginResponseSchema,
-  User,
-  LogoutResponseSchema,
-  ENDPOINTS,
-} from '@gamifikace/shared';
+import { User, ENDPOINTS } from '@gamifikace/shared';
 import { prisma } from '../config/db';
 import { UserService } from '../services/UserService';
 import { OAuth2Client } from 'google-auth-library';

@@ -1,7 +1,7 @@
 import { ENDPOINTS } from '@gamifikace/shared';
 import { TypedRequestHandler } from '../utils/typedRequestHandler';
 
-export const getUserInfoHandler: TypedRequestHandler<typeof ENDPOINTS.USER.INFO> = async (req) => {
+export const getMeInfoHandler: TypedRequestHandler<typeof ENDPOINTS.USER.ME> = async (req) => {
   const user = req.user;
 
   return {

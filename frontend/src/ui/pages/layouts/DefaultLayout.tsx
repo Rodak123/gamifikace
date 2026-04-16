@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { ROUTES } from '../../../router';
+import { ROUTES } from '../../../routes';
 import { LogoutButton } from '../../components/LogoutButton';
 import { useAuth } from '../../../libs/hooks/useAuth';
 

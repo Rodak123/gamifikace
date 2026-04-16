@@ -1,34 +1,12 @@
-import {
-  createBrowserRouter,
-  Navigate,
-  Outlet,
-  useLocation,
-} from 'react-router';
+import { createBrowserRouter } from 'react-router';
 
 import { MainPage } from './ui/pages/MainPage';
 import { ErrorPage } from './ui/pages/ErrorPage';
 import { AchievementsPage } from './ui/pages/AchievementsPage';
 import { ScoreboardPage } from './ui/pages/ScoreboardPage';
 import { LoginPage } from './ui/pages/LoginPage';
-import { useAuth } from './libs/hooks/useAuth';
-
-const ProtectedRoute = () => {
-  const { authData } = useAuth();
-  const location = useLocation();
-
-  if (authData.isAuthenticated === false) {
-    return <Navigate to={ROUTES.LOGIN} state={{ from: location }} replace />;
-  }
-
-  return <Outlet />;
-};
-
-export const ROUTES = {
-  LOGIN: '/login',
-  HOME: '/',
-  ACHIEVEMENTS: '/achievements',
-  SCOREBOARD: '/scoreboard',
-} as const;
+import { ProtectedRoute } from './middleware/ProtectedRoute';
+import { ROUTES } from './routes';
 
 export const router = createBrowserRouter([
   {
