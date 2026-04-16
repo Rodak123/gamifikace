@@ -1,5 +1,5 @@
 import { z } from 'zod';
-export declare const EarnAchievementRequestSchema: z.ZodObject<{
+export declare const RevokeAchievementRequestSchema: z.ZodObject<{
     params: z.ZodObject<{}, z.core.$strip>;
     query: z.ZodObject<{}, z.core.$strip>;
     body: z.ZodObject<{
@@ -11,13 +11,9 @@ export declare const EarnAchievementRequestSchema: z.ZodObject<{
         }, z.core.$strip>;
     }, z.core.$strip>;
 }, z.core.$strip>;
-export declare const EarnAchievementResponseSchema: z.ZodObject<{
+export declare const RevokeAchievementResponseSchema: z.ZodObject<{
     success: z.ZodLiteral<true>;
     data: z.ZodObject<{
-        log: z.ZodObject<{
-            userId: z.ZodString;
-            achievementKey: z.ZodString;
-            earnedAt: z.ZodDate;
-        }, z.core.$strip>;
+        achievementRevoked: z.ZodLiteral<true>;
     }, z.core.$strip>;
 }, z.core.$strip>;

@@ -1,11 +1,11 @@
 info:
-  name: Get User Info
+  name: Get Scoreboard
   type: http
   seq: 1
 
 http:
   method: POST
-  url: "{{API_PATH}}/user/me"
+  url: "{{API_PATH}}/game/scoreboard"
   auth: inherit
 
 settings:

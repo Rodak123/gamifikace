@@ -9,4 +9,8 @@ export * from './achievement/achievement.schema';
 export * from './achievement/createAchievement.schema';
 export * from './achievement/getAllAchievements.schema';
 export * from './achievement/getOneAchievement.schema';
+export * from './achievement/earnAchievement.schema';
+export * from './achievement/revokeAchievement.schema';
 export * from './userAchievementLog/userAchievementLog.schema';
+export * from './game/scoreboard.schema';
+export * from './game/getScoreboard.schema';

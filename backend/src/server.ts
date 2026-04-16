@@ -11,6 +11,7 @@ import { errorHandler } from './middleware/errorHandler.js';
 import { achievementRoutes, rootRoutes } from './routes/index.js';
 import { authRoutes } from './routes/authRoutes.js';
 import { userRoutes } from './routes/userRoutes.js';
+import { gameRoutes } from './routes/gameRoutes.js';
 
 const app: Express = express();
 const PORT = env.PORT;
@@ -30,6 +31,7 @@ app.use(limiter);
 
 // Routes
 app.use(rootRoutes);
+app.use(gameRoutes);
 app.use(authRoutes);
 app.use(userRoutes);
 app.use(achievementRoutes);

@@ -17,6 +17,12 @@ import {
   LogoutRequestSchema,
   LogoutResponseSchema,
   SuccessRespoonseSchemaType,
+  EarnAchievementRequestSchema,
+  EarnAchievementResponseSchema,
+  GetScoreboardRequestSchema,
+  GetScoreboardResponseSchema,
+  RevokeAchievementRequestSchema,
+  RevokeAchievementResponseSchema,
 } from './schemas';
 import { Endpoint } from './types/endpoint';
 
@@ -33,6 +39,7 @@ const ROUTES = {
   USER: '/user',
   ACHIEVEMENT: '/achievement',
   AUTH: '/auth',
+  GAME: '/game',
 } as const;
 
 export const ENDPOINTS = {
@@ -42,6 +49,15 @@ export const ENDPOINTS = {
       requestSchema: HealthRequestSchema,
       responseSchema: HealthResponseSchema,
       method: 'get',
+      auth: { isAuthenticated: false },
+    }),
+  },
+  GAME: {
+    GET_SCOREBOARD: createEndpoint({
+      path: `${ROUTES.GAME}/scoreboard`,
+      requestSchema: GetScoreboardRequestSchema,
+      responseSchema: GetScoreboardResponseSchema,
+      method: 'post',
       auth: { isAuthenticated: false },
     }),
   },
@@ -69,8 +85,15 @@ export const ENDPOINTS = {
     }),
     EARN: createEndpoint({
       path: `${ROUTES.ACHIEVEMENT}/earn`,
-      requestSchema: GetOneAchievementRequestSchema,
-      responseSchema: GetOneAchievementResponseSchema,
+      requestSchema: EarnAchievementRequestSchema,
+      responseSchema: EarnAchievementResponseSchema,
+      method: 'post',
+      auth: { isAuthenticated: false },
+    }),
+    REVOKE: createEndpoint({
+      path: `${ROUTES.ACHIEVEMENT}/revoke`,
+      requestSchema: RevokeAchievementRequestSchema,
+      responseSchema: RevokeAchievementResponseSchema,
       method: 'post',
       auth: { isAuthenticated: false },
     }),

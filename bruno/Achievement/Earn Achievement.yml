@@ -1,0 +1,22 @@
+info:
+  name: Earn Achievement
+  type: http
+  seq: 4
+
+http:
+  method: POST
+  url: "{{API_PATH}}/achievement/earn"
+  body:
+    type: json
+    data: |-
+      {
+        "achievement": {"key": "react-dev"},
+        "user": {"id": "b1c90688-7b28-49fe-a83b-2562abeb5a42"}
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

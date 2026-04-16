@@ -37,10 +37,33 @@ export const getOneAchievementHandler: TypedRequestHandler<
   const achievement = await achievementService.getOneAchievement(req.params.key);
 
   if (achievement === null) {
-    throw new EndpointError(400, 'Achievement not found');
+    throw new EndpointError(400, `Achievement with key: '${req.params.key}' not found`);
   }
 
   return {
     achievement: achievement,
+  };
+};
+
+export const earnAchievementHandler: TypedRequestHandler<
+  typeof ENDPOINTS.ACHIEVEMENT.EARN
+> = async (req) => {
+  const userAchievementLog = await achievementService.earnAchievement(
+    req.body.user.id,
+    req.body.achievement.key
+  );
+
+  return {
+    log: userAchievementLog,
+  };
+};
+
+export const revokeAchievementHandler: TypedRequestHandler<
+  typeof ENDPOINTS.ACHIEVEMENT.REVOKE
+> = async (req) => {
+  await achievementService.revokeAchievement(req.body.user.id, req.body.achievement.key);
+
+  return {
+    achievementRevoked: true,
   };
 };

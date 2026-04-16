@@ -49,10 +49,12 @@ export const defineRoute = <
       ); // stfu typescript
 
       if (!res.headersSent) {
-        res.status(200).json({
+        const responseJson = {
           success: true,
           data: data,
-        });
+        };
+        const parsed = route.definition.responseSchema.parse(responseJson);
+        res.status(200).json(parsed);
       }
     } catch (error) {
       next(error);
