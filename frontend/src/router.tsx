@@ -15,22 +15,22 @@ export const router = createBrowserRouter([
     element: <LoginPage />,
   },
   {
+    path: ROUTES.SCOREBOARD,
+    ErrorBoundary: ErrorPage,
+    element: <ScoreboardPage />,
+  },
+  {
+    path: ROUTES.ACHIEVEMENTS,
+    ErrorBoundary: ErrorPage,
+    element: <AchievementsPage />,
+  },
+  {
     element: <ProtectedRoute />,
     children: [
       {
         path: ROUTES.HOME,
         ErrorBoundary: ErrorPage,
         element: <MainPage />,
-      },
-      {
-        path: ROUTES.ACHIEVEMENTS,
-        ErrorBoundary: ErrorPage,
-        element: <AchievementsPage />,
-      },
-      {
-        path: ROUTES.SCOREBOARD,
-        ErrorBoundary: ErrorPage,
-        element: <ScoreboardPage />,
       },
     ],
   },

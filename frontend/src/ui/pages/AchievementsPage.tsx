@@ -7,7 +7,7 @@ import { LoadingPage } from './LoadingPage';
 import { AchievementDisplay } from '../components/AchievementDisplay';
 
 export const AchievementsPage: React.FC = () => {
-  const { data, isSuccess } = useQuery({
+  const achievementsQuery = useQuery({
     queryKey: ['achievements'],
     queryFn: () =>
       apiClient.request(ENDPOINTS.ACHIEVEMENT.GET_ALL, {
@@ -16,7 +16,7 @@ export const AchievementsPage: React.FC = () => {
       }),
   });
 
-  if (!isSuccess) {
+  if (!achievementsQuery.isSuccess) {
     return <LoadingPage />;
   }
 
@@ -25,7 +25,7 @@ export const AchievementsPage: React.FC = () => {
       <Typography variant='h1' size='5xl' className='text-center'>
         Achievements
       </Typography>
-      {data.achievements.map((achievement) => {
+      {achievementsQuery.data.achievements.map((achievement) => {
         return (
           <AchievementDisplay key={achievement.key} achievement={achievement} />
         );

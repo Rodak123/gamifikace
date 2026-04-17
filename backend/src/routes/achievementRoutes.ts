@@ -6,6 +6,7 @@ import {
   getOneAchievementHandler,
   earnAchievementHandler,
   revokeAchievementHandler,
+  getMineAchievementsHandler,
 } from '../controllers/achievementController.js';
 import { defineRoute } from '../utils/defineRoute.js';
 
@@ -29,6 +30,11 @@ defineRoute(achievementRoutes, {
 defineRoute(achievementRoutes, {
   definition: ENDPOINTS.ACHIEVEMENT.REVOKE,
   fn: revokeAchievementHandler,
+});
+
+defineRoute(achievementRoutes, {
+  definition: ENDPOINTS.ACHIEVEMENT.GET_MINE,
+  fn: getMineAchievementsHandler,
 });
 
 defineRoute(achievementRoutes, {

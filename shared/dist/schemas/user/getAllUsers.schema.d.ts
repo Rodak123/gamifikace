@@ -1,20 +1,18 @@
 import { z } from 'zod';
-export declare const GetOneUserRequestSchema: z.ZodObject<{
+export declare const GetAllUsersRequestSchema: z.ZodObject<{
     body: z.ZodObject<{}, z.core.$strip>;
+    params: z.ZodObject<{}, z.core.$strip>;
     query: z.ZodObject<{}, z.core.$strip>;
-    params: z.ZodObject<{
-        id: z.ZodString;
-    }, z.core.$strip>;
 }, z.core.$strip>;
-export declare const GetOneUserResponseSchema: z.ZodObject<{
+export declare const GetAllUsersResponseSchema: z.ZodObject<{
     success: z.ZodLiteral<true>;
     data: z.ZodObject<{
-        user: z.ZodObject<{
+        users: z.ZodArray<z.ZodObject<{
             id: z.ZodString;
             nickname: z.ZodString;
             firstName: z.ZodString;
             lastName: z.ZodString;
             createdAt: z.ZodDate;
-        }, z.core.$strip>;
+        }, z.core.$strip>>;
     }, z.core.$strip>;
 }, z.core.$strip>;

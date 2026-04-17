@@ -45,4 +45,8 @@ export class UserService {
       where: { id },
     });
   }
+
+  public async getAllUsers() {
+    return await this.db.user.findMany();
+  }
 }

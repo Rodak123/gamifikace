@@ -23,6 +23,12 @@ import {
   GetScoreboardResponseSchema,
   RevokeAchievementRequestSchema,
   RevokeAchievementResponseSchema,
+  GetOneUserRequestSchema,
+  GetOneUserResponseSchema,
+  GetAllUsersRequestSchema,
+  GetAllUsersResponseSchema,
+  GetMineAchievementsRequestSchema,
+  GetMineAchievementsResponseSchema,
 } from './schemas';
 import { Endpoint } from './types/endpoint';
 
@@ -97,12 +103,33 @@ export const ENDPOINTS = {
       method: 'post',
       auth: { isAuthenticated: false },
     }),
+    GET_MINE: createEndpoint({
+      path: `${ROUTES.ACHIEVEMENT}/mine`,
+      requestSchema: GetMineAchievementsRequestSchema,
+      responseSchema: GetMineAchievementsResponseSchema,
+      method: 'post',
+      auth: { isAuthenticated: true },
+    }),
   },
   USER: {
     ME: createEndpoint({
       path: `${ROUTES.USER}/me`,
       requestSchema: GetMeInfoRequestSchema,
       responseSchema: GetMeInfoResponseSchema,
+      method: 'post',
+      auth: { isAuthenticated: true },
+    }),
+    GET_ONE: createEndpoint({
+      path: `${ROUTES.USER}/:id`,
+      requestSchema: GetOneUserRequestSchema,
+      responseSchema: GetOneUserResponseSchema,
+      method: 'post',
+      auth: { isAuthenticated: false },
+    }),
+    GET_ALL: createEndpoint({
+      path: `${ROUTES.USER}/all`,
+      requestSchema: GetAllUsersRequestSchema,
+      responseSchema: GetAllUsersResponseSchema,
       method: 'post',
       auth: { isAuthenticated: true },
     }),

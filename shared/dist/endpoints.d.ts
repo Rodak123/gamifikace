@@ -128,6 +128,22 @@ export declare const ENDPOINTS: {
                 achievementRevoked: import("zod").ZodLiteral<true>;
             }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, false>;
+        readonly GET_MINE: Endpoint<import("zod").ZodObject<{
+            body: import("zod").ZodObject<{}, import("zod/v4/core").$strip>;
+            params: import("zod").ZodObject<{}, import("zod/v4/core").$strip>;
+            query: import("zod").ZodObject<{}, import("zod/v4/core").$strip>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            success: import("zod").ZodLiteral<true>;
+            data: import("zod").ZodObject<{
+                achievements: import("zod").ZodArray<import("zod").ZodObject<{
+                    key: import("zod").ZodString;
+                    xp: import("zod").ZodNumber;
+                    name: import("zod").ZodString;
+                    description: import("zod").ZodString;
+                    createdAt: import("zod").ZodDate;
+                }, import("zod/v4/core").$strip>>;
+            }, import("zod/v4/core").$strip>;
+        }, import("zod/v4/core").$strip>, true>;
     };
     readonly USER: {
         readonly ME: Endpoint<import("zod").ZodObject<{
@@ -145,6 +161,40 @@ export declare const ENDPOINTS: {
                     lastName: import("zod").ZodString;
                     createdAt: import("zod").ZodDate;
                 }, import("zod/v4/core").$strip>;
+            }, import("zod/v4/core").$strip>;
+        }, import("zod/v4/core").$strip>, true>;
+        readonly GET_ONE: Endpoint<import("zod").ZodObject<{
+            body: import("zod").ZodObject<{}, import("zod/v4/core").$strip>;
+            query: import("zod").ZodObject<{}, import("zod/v4/core").$strip>;
+            params: import("zod").ZodObject<{
+                id: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            success: import("zod").ZodLiteral<true>;
+            data: import("zod").ZodObject<{
+                user: import("zod").ZodObject<{
+                    id: import("zod").ZodString;
+                    nickname: import("zod").ZodString;
+                    firstName: import("zod").ZodString;
+                    lastName: import("zod").ZodString;
+                    createdAt: import("zod").ZodDate;
+                }, import("zod/v4/core").$strip>;
+            }, import("zod/v4/core").$strip>;
+        }, import("zod/v4/core").$strip>, false>;
+        readonly GET_ALL: Endpoint<import("zod").ZodObject<{
+            body: import("zod").ZodObject<{}, import("zod/v4/core").$strip>;
+            params: import("zod").ZodObject<{}, import("zod/v4/core").$strip>;
+            query: import("zod").ZodObject<{}, import("zod/v4/core").$strip>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            success: import("zod").ZodLiteral<true>;
+            data: import("zod").ZodObject<{
+                users: import("zod").ZodArray<import("zod").ZodObject<{
+                    id: import("zod").ZodString;
+                    nickname: import("zod").ZodString;
+                    firstName: import("zod").ZodString;
+                    lastName: import("zod").ZodString;
+                    createdAt: import("zod").ZodDate;
+                }, import("zod/v4/core").$strip>>;
             }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, true>;
     };

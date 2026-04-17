@@ -2,6 +2,7 @@ import axios, { AxiosError, type AxiosInstance } from 'axios';
 import { API_PATH } from './apiPath';
 import { z } from 'zod';
 import {
+  ENDPOINTS,
   ErrorResponseSchema,
   type ApiResponse,
   type BaseRequestSchemaType,
@@ -111,17 +112,10 @@ class ApiClient {
 
 export const apiClient = new ApiClient();
 
-// const responseA = await apiClient.call(ENDPOINTS.AUTH.LOGIN, {
+// const responseA = await apiClient.request(ENDPOINTS.AUTH.LOGIN, {
 //   body: {
 //     credential: 'test-credential',
 //   },
+//   params: {},
 // });
 // console.log(responseA.user);
-
-// const responseB = await apiClient.call(ENDPOINTS.ACHIEVEMENT.GET_ONE, {
-//   params: {
-//     key: 'achievement-key',
-//   },
-// });
-
-// const responseC = await apiClient.call(ENDPOINTS.AUTH.LOGOUT);

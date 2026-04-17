@@ -1,16 +1,15 @@
 import { z } from 'zod';
-export declare const GetOneUserRequestSchema: z.ZodObject<{
+export declare const GetMeInfoRequestSchema: z.ZodObject<{
     body: z.ZodObject<{}, z.core.$strip>;
+    params: z.ZodObject<{}, z.core.$strip>;
     query: z.ZodObject<{}, z.core.$strip>;
-    params: z.ZodObject<{
-        id: z.ZodString;
-    }, z.core.$strip>;
 }, z.core.$strip>;
-export declare const GetOneUserResponseSchema: z.ZodObject<{
+export declare const GetMeInfoResponseSchema: z.ZodObject<{
     success: z.ZodLiteral<true>;
     data: z.ZodObject<{
         user: z.ZodObject<{
             id: z.ZodString;
+            email: z.ZodString;
             nickname: z.ZodString;
             firstName: z.ZodString;
             lastName: z.ZodString;

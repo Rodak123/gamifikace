@@ -101,4 +101,10 @@ export class AchievementService {
   public async getAllAchievements() {
     return await this.db.achievement.findMany();
   }
+
+  public async getAllAchievementsOfUser(userId: string) {
+    return await this.db.achievement.findMany({
+      where: { users: { some: { userId: userId } } },
+    });
+  }
 }

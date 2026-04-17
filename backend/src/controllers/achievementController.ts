@@ -67,3 +67,13 @@ export const revokeAchievementHandler: TypedRequestHandler<
     achievementRevoked: true,
   };
 };
+
+export const getMineAchievementsHandler: TypedRequestHandler<
+  typeof ENDPOINTS.ACHIEVEMENT.GET_MINE
+> = async (req) => {
+  const achievements = await achievementService.getAllAchievementsOfUser(req.user.id);
+
+  return {
+    achievements: achievements,
+  };
+};
