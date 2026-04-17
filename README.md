@@ -10,6 +10,7 @@
     - [Using tmux](#using-tmux)
     - [Manually](#manually)
   - [Deploy](#deploy)
+  - [Screenshots](#screenshots)
 
 ## Parts
 
@@ -61,3 +62,7 @@ Follow each **README.md** inside `/frontend`, `/backend` and `/shared`:
 ## Deploy
 
 TBD
+
+## Screenshots
+
+![achievements](./docs/achievements.png)
