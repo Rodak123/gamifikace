@@ -21,6 +21,7 @@ export declare const LoginResponseSchema: z.ZodObject<{
                 readonly ADMIN: "ADMIN";
                 readonly SUPERADMIN: "SUPERADMIN";
             }>;
+            pictureUrl: z.ZodOptional<z.ZodString>;
         }, z.core.$strip>;
     }, z.core.$strip>;
 }, z.core.$strip>;

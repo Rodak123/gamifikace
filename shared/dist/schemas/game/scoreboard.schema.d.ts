@@ -5,6 +5,7 @@ export declare const ScoreboardSchema: z.ZodArray<z.ZodObject<{
         nickname: z.ZodString;
         firstName: z.ZodString;
         lastName: z.ZodString;
+        pictureUrl: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>;
     totalXp: z.ZodNumber;
     logs: z.ZodArray<z.ZodObject<{

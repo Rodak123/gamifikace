@@ -9,6 +9,7 @@ export const UserSchema = z.object({
   lastName: z.string(),
   createdAt: z.date(),
   role: z.enum(ROLES),
+  pictureUrl: z.string().optional(),
 });
 
 export type User = z.infer<typeof UserSchema>;

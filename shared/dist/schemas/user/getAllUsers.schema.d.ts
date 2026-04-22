@@ -12,6 +12,7 @@ export declare const GetAllUsersResponseSchema: z.ZodObject<{
             nickname: z.ZodString;
             firstName: z.ZodString;
             lastName: z.ZodString;
+            pictureUrl: z.ZodOptional<z.ZodString>;
         }, z.core.$strip>>;
     }, z.core.$strip>;
 }, z.core.$strip>;

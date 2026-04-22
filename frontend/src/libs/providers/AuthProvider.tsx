@@ -80,10 +80,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   });
 
   const login = useCallback(async () => {
-    if (env.VITE_NODE_ENV === 'development') {
-      loginDevMutation.mutate();
-    } else {
+    if (env.VITE_USE_GOOGLE_AUTH) {
       usedGoogleLogin();
+    } else {
+      loginDevMutation.mutate();
     }
   }, [usedGoogleLogin, loginDevMutation]);
 

@@ -13,7 +13,8 @@ export class UserService {
     firstName: string,
     lastName: string,
     email: string,
-    role?: Role
+    role?: Role,
+    pictureUrl?: string
   ): Promise<User> {
     return await this.db.user.create({
       data: {
@@ -22,6 +23,7 @@ export class UserService {
         lastName,
         email,
         role,
+        pictureUrl,
       },
     });
   }
@@ -31,7 +33,8 @@ export class UserService {
     nickname: string,
     firstName: string,
     lastName: string,
-    role?: Role
+    role?: Role,
+    pictureUrl?: string
   ): Promise<User> {
     const user = await this.db.user.findFirst({
       where: { email },
@@ -39,7 +42,7 @@ export class UserService {
 
     if (user !== null) return user;
 
-    return await this.createUser(nickname, firstName, lastName, email, role);
+    return await this.createUser(nickname, firstName, lastName, email, role, pictureUrl);
   }
 
   public async getUser(id: string): Promise<User | null> {

@@ -11,6 +11,7 @@ export declare const UserSchema: z.ZodObject<{
         readonly ADMIN: "ADMIN";
         readonly SUPERADMIN: "SUPERADMIN";
     }>;
+    pictureUrl: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 export type User = z.infer<typeof UserSchema>;
 export declare const SharedUserSchema: z.ZodObject<{
@@ -18,5 +19,6 @@ export declare const SharedUserSchema: z.ZodObject<{
     nickname: z.ZodString;
     firstName: z.ZodString;
     lastName: z.ZodString;
+    pictureUrl: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 export type SharedUser = z.infer<typeof SharedUserSchema>;

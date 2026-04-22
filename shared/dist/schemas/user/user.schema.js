@@ -8,6 +8,7 @@ export const UserSchema = z.object({
     lastName: z.string(),
     createdAt: z.date(),
     role: z.enum(ROLES),
+    pictureUrl: z.string().optional(),
 });
 export const SharedUserSchema = UserSchema.omit({
     email: true,

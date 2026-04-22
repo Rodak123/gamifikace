@@ -2,6 +2,7 @@ import { User, ENDPOINTS, ROLES } from '@gamifikace/shared';
 import { prisma } from '../config/db';
 import { UserService } from '../services/UserService';
 import { OAuth2Client } from 'google-auth-library';
+import { google } from 'googleapis';
 import { env } from '../config/env';
 import { JWTService } from '../services/JWTService';
 import { Response } from 'express';
@@ -11,7 +12,6 @@ import { TypedRequestHandler } from '../utils/typedRequestHandler';
 
 const userService = new UserService(prisma);
 const jwtService = new JWTService();
-const oauthClient = new OAuth2Client(env.GOOGLE_CLIENT_ID);
 
 const loginWithUser = (res: Response, user: User) => {
   const token = jwtService.sign(user);
@@ -24,22 +24,38 @@ const loginWithUser = (res: Response, user: User) => {
   });
 };
 
-export const loginHandler: TypedRequestHandler<typeof ENDPOINTS.AUTH.LOGIN> = async (req, res) => {
-  const ticket = await oauthClient.verifyIdToken({
-    idToken: req.body.credential,
-    audience: env.GOOGLE_CLIENT_ID,
-  });
-  const payload = ticket.getPayload();
+const getUserInfo = async (accessToken: string) => {
+  try {
+    const client = new OAuth2Client();
+    client.setCredentials({ access_token: accessToken });
 
-  if (!payload || payload.email === undefined) {
-    throw new EndpointError(400, 'Invalid Google token');
+    const oauth2 = google.oauth2({ version: 'v2', auth: client });
+
+    const userInfoResponse = await oauth2.userinfo.get();
+    const payload = userInfoResponse.data;
+
+    if (!payload || !payload.email) {
+      throw new EndpointError(400, 'Invalid Google token: No email provided');
+    }
+
+    return payload;
+  } catch (error) {
+    throw new EndpointError(401, `Failed to verify access token with Google: ${error}`);
   }
+};
+
+export const loginHandler: TypedRequestHandler<typeof ENDPOINTS.AUTH.LOGIN> = async (req, res) => {
+  const accessToken = req.body.credential;
+
+  const payload = await getUserInfo(accessToken);
 
   const user = await userService.findOrCreateUser(
-    payload.email,
+    payload.email!,
     payload.name ?? 'User',
     payload.given_name ?? '',
-    payload.family_name ?? ''
+    payload.family_name ?? '',
+    undefined,
+    payload.picture ?? undefined
   );
 
   loginWithUser(res, user);
@@ -69,7 +85,8 @@ export const devloginHandler: TypedRequestHandler<typeof ENDPOINTS.AUTH.LOGIN_DE
     payload.name,
     payload.given_name,
     payload.family_name,
-    ROLES.SUPERADMIN
+    ROLES.SUPERADMIN,
+    'https://picsum.photos/64/64'
   );
 
   loginWithUser(res, user);

@@ -26,6 +26,7 @@ export declare const ENDPOINTS: {
                         nickname: import("zod").ZodString;
                         firstName: import("zod").ZodString;
                         lastName: import("zod").ZodString;
+                        pictureUrl: import("zod").ZodOptional<import("zod").ZodString>;
                     }, import("zod/v4/core").$strip>;
                     totalXp: import("zod").ZodNumber;
                     logs: import("zod").ZodArray<import("zod").ZodObject<{
@@ -185,6 +186,7 @@ export declare const ENDPOINTS: {
                         readonly ADMIN: "ADMIN";
                         readonly SUPERADMIN: "SUPERADMIN";
                     }>;
+                    pictureUrl: import("zod").ZodOptional<import("zod").ZodString>;
                 }, import("zod/v4/core").$strip>;
             }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, true>;
@@ -208,6 +210,7 @@ export declare const ENDPOINTS: {
                         readonly ADMIN: "ADMIN";
                         readonly SUPERADMIN: "SUPERADMIN";
                     }>;
+                    pictureUrl: import("zod").ZodOptional<import("zod").ZodString>;
                 }, import("zod/v4/core").$strip>;
             }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, false>;
@@ -223,6 +226,7 @@ export declare const ENDPOINTS: {
                     nickname: import("zod").ZodString;
                     firstName: import("zod").ZodString;
                     lastName: import("zod").ZodString;
+                    pictureUrl: import("zod").ZodOptional<import("zod").ZodString>;
                 }, import("zod/v4/core").$strip>>;
             }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, true>;
@@ -249,6 +253,7 @@ export declare const ENDPOINTS: {
                         readonly ADMIN: "ADMIN";
                         readonly SUPERADMIN: "SUPERADMIN";
                     }>;
+                    pictureUrl: import("zod").ZodOptional<import("zod").ZodString>;
                 }, import("zod/v4/core").$strip>;
             }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, false>;
@@ -271,6 +276,7 @@ export declare const ENDPOINTS: {
                         readonly ADMIN: "ADMIN";
                         readonly SUPERADMIN: "SUPERADMIN";
                     }>;
+                    pictureUrl: import("zod").ZodOptional<import("zod").ZodString>;
                 }, import("zod/v4/core").$strip>;
             }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, false>;
