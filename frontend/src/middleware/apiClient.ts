@@ -96,12 +96,15 @@ class ApiClient {
     >;
 
     if (
-      responseData &&
-      typeof responseData === 'object' &&
-      'success' in responseData &&
-      !responseData.success
+      !responseData ||
+      typeof responseData !== 'object' ||
+      !('success' in responseData)
     ) {
-      throw new Error(responseData.message || 'API Request Failed');
+      throw new Error('API invalid response');
+    }
+
+    if (!responseData.success) {
+      throw new Error(responseData.message || 'API request failed');
     }
 
     return (
