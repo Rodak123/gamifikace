@@ -1,12 +1,13 @@
 import { createBrowserRouter } from 'react-router';
 
-import { MainPage } from './ui/pages/MainPage';
 import { ErrorPage } from './ui/pages/ErrorPage';
 import { AchievementsPage } from './ui/pages/AchievementsPage';
-import { ScoreboardPage } from './ui/pages/ScoreboardPage';
+import { LandingPage } from './ui/pages/LandingPage';
 import { LoginPage } from './ui/pages/LoginPage';
 import { ProtectedRoute } from './middleware/ProtectedRoute';
 import { ROUTES } from './routes';
+import { AdminPage } from './ui/pages/AdminPage';
+import { ROLES } from '@gamifikace/shared';
 
 export const router = createBrowserRouter([
   {
@@ -15,9 +16,9 @@ export const router = createBrowserRouter([
     element: <LoginPage />,
   },
   {
-    path: ROUTES.SCOREBOARD,
+    path: ROUTES.LANDING,
     ErrorBoundary: ErrorPage,
-    element: <ScoreboardPage />,
+    element: <LandingPage />,
   },
   {
     path: ROUTES.ACHIEVEMENTS,
@@ -25,12 +26,12 @@ export const router = createBrowserRouter([
     element: <AchievementsPage />,
   },
   {
-    element: <ProtectedRoute />,
+    element: <ProtectedRoute minRole={ROLES.ADMIN} />,
     children: [
       {
-        path: ROUTES.HOME,
+        path: ROUTES.ADMIN_HOME,
         ErrorBoundary: ErrorPage,
-        element: <MainPage />,
+        element: <AdminPage />,
       },
     ],
   },

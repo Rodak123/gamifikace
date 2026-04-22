@@ -6,7 +6,7 @@ import { DefaultLayout } from './layouts/DefaultLayout';
 import { LoadingPage } from './LoadingPage';
 import { AchievementManage } from '../components/AchievementManage';
 
-export const MainPage: React.FC = () => {
+export const AdminPage: React.FC = () => {
   const achievementsQuery = useQuery({
     queryKey: ['achievements'],
     queryFn: () =>

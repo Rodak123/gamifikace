@@ -10,6 +10,9 @@ export declare const GetScoreboardResponseSchema: z.ZodObject<{
         scoreboard: z.ZodArray<z.ZodObject<{
             user: z.ZodObject<{
                 id: z.ZodString;
+                nickname: z.ZodString;
+                firstName: z.ZodString;
+                lastName: z.ZodString;
             }, z.core.$strip>;
             totalXp: z.ZodNumber;
             logs: z.ZodArray<z.ZodObject<{

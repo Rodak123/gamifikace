@@ -1,4 +1,5 @@
 import { CreateAchievementRequestSchema, CreateAchievementResponseSchema, DevLoginRequestSchema, DevLoginResponseSchema, GetAllAchievementsRequestSchema, GetAllAchievementsResponseSchema, GetOneAchievementRequestSchema, GetOneAchievementResponseSchema, GetMeInfoRequestSchema, GetMeInfoResponseSchema, HealthRequestSchema, HealthResponseSchema, LoginRequestSchema, LoginResponseSchema, LogoutRequestSchema, LogoutResponseSchema, EarnAchievementRequestSchema, EarnAchievementResponseSchema, GetScoreboardRequestSchema, GetScoreboardResponseSchema, RevokeAchievementRequestSchema, RevokeAchievementResponseSchema, GetOneUserRequestSchema, GetOneUserResponseSchema, GetAllUsersRequestSchema, GetAllUsersResponseSchema, GetMineAchievementsRequestSchema, GetMineAchievementsResponseSchema, } from './schemas';
+import { ROLES } from './types';
 const createEndpoint = (endpoint) => endpoint;
 const ROUTES = {
     ROOT: '',
@@ -67,7 +68,7 @@ export const ENDPOINTS = {
             requestSchema: GetMineAchievementsRequestSchema,
             responseSchema: GetMineAchievementsResponseSchema,
             method: 'post',
-            auth: { isAuthenticated: true },
+            auth: { isAuthenticated: true, minRole: ROLES.USER },
         }),
     },
     USER: {
@@ -76,7 +77,7 @@ export const ENDPOINTS = {
             requestSchema: GetMeInfoRequestSchema,
             responseSchema: GetMeInfoResponseSchema,
             method: 'post',
-            auth: { isAuthenticated: true },
+            auth: { isAuthenticated: true, minRole: ROLES.USER },
         }),
         GET_ONE: createEndpoint({
             path: `${ROUTES.USER}/:id`,
@@ -90,7 +91,7 @@ export const ENDPOINTS = {
             requestSchema: GetAllUsersRequestSchema,
             responseSchema: GetAllUsersResponseSchema,
             method: 'post',
-            auth: { isAuthenticated: true },
+            auth: { isAuthenticated: true, minRole: ROLES.ADMIN },
         }),
     },
     AUTH: {
@@ -113,7 +114,7 @@ export const ENDPOINTS = {
             requestSchema: LogoutRequestSchema,
             responseSchema: LogoutResponseSchema,
             method: 'post',
-            auth: { isAuthenticated: true },
+            auth: { isAuthenticated: true, minRole: ROLES.USER },
         }),
     },
 };

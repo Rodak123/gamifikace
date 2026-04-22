@@ -6,7 +6,7 @@ import { ENDPOINTS } from '@gamifikace/shared';
 import { LoadingPage } from './LoadingPage';
 import { ScoreDisplay } from '../components/ScoreDisplay';
 
-export const ScoreboardPage: React.FC = () => {
+export const LandingPage: React.FC = () => {
   const scoreboardQuery = useQuery({
     queryKey: ['scoreboard'],
     queryFn: () =>

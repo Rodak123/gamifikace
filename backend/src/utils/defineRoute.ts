@@ -1,8 +1,14 @@
 import { RequestHandler, Router, NextFunction } from 'express';
-import { authenticateJWT } from '../middleware/auth';
-import { BaseRequestSchemaType, Endpoint, SuccessRespoonseSchemaType } from '@gamifikace/shared';
+import { AuthenticatedRequest, authenticateJWT } from '../middleware/auth';
+import {
+  BaseRequestSchemaType,
+  Endpoint,
+  hasAccess,
+  SuccessRespoonseSchemaType,
+} from '@gamifikace/shared';
 import { ZodType } from 'zod';
 import { TypedRequestHandler } from './typedRequestHandler';
+import { EndpointError } from '../middleware/endpointError';
 
 export interface Route<
   E extends Endpoint<BaseRequestSchemaType, SuccessRespoonseSchemaType, boolean>,
@@ -41,9 +47,22 @@ export const defineRoute = <
   route: Route<E>
 ) => {
   const routeFunction: RequestHandler = async (req, res, next) => {
+    const typedReq = req as Parameters<TypedRequestHandler<E>>[0];
+
+    if (route.definition.auth.isAuthenticated) {
+      const minRole = route.definition.auth.minRole;
+
+      const authenticatedReq = typedReq as AuthenticatedRequest<unknown, unknown, unknown, unknown>;
+      const role = authenticatedReq.user.role;
+
+      if (!hasAccess(role, minRole)) {
+        next(new EndpointError(403, 'Clearance was not met.'));
+      }
+    }
+
     try {
       const data = await route.fn(
-        req as Parameters<TypedRequestHandler<E>>[0],
+        typedReq,
         res as Parameters<TypedRequestHandler<E>>[1],
         next as Parameters<TypedRequestHandler<E>>[2]
       ); // stfu typescript

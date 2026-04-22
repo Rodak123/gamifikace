@@ -10,7 +10,7 @@ export const LoginPage: React.FC = () => {
   const location = useLocation();
 
   if (authData.isAuthenticated) {
-    const origin = location.state?.from?.pathname || ROUTES.HOME;
+    const origin = location.state?.from?.pathname || ROUTES.LANDING;
     return <Navigate to={origin} replace />;
   }
 

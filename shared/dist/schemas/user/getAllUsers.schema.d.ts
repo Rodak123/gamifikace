@@ -12,7 +12,6 @@ export declare const GetAllUsersResponseSchema: z.ZodObject<{
             nickname: z.ZodString;
             firstName: z.ZodString;
             lastName: z.ZodString;
-            createdAt: z.ZodDate;
         }, z.core.$strip>>;
     }, z.core.$strip>;
 }, z.core.$strip>;

@@ -15,6 +15,11 @@ export declare const GetOneUserResponseSchema: z.ZodObject<{
             firstName: z.ZodString;
             lastName: z.ZodString;
             createdAt: z.ZodDate;
+            role: z.ZodEnum<{
+                readonly USER: "USER";
+                readonly ADMIN: "ADMIN";
+                readonly SUPERADMIN: "SUPERADMIN";
+            }>;
         }, z.core.$strip>;
     }, z.core.$strip>;
 }, z.core.$strip>;

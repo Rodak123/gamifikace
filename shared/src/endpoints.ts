@@ -30,12 +30,13 @@ import {
   GetMineAchievementsRequestSchema,
   GetMineAchievementsResponseSchema,
 } from './schemas';
+import { ROLES } from './types';
 import { Endpoint } from './types/endpoint';
 
 const createEndpoint = <
   TReq extends BaseRequestSchemaType,
   TRes extends SuccessRespoonseSchemaType,
-  TIsAuth extends boolean = false,
+  TIsAuth extends boolean,
 >(
   endpoint: Endpoint<TReq, TRes, TIsAuth>,
 ): Endpoint<TReq, TRes, TIsAuth> => endpoint;
@@ -108,7 +109,7 @@ export const ENDPOINTS = {
       requestSchema: GetMineAchievementsRequestSchema,
       responseSchema: GetMineAchievementsResponseSchema,
       method: 'post',
-      auth: { isAuthenticated: true },
+      auth: { isAuthenticated: true, minRole: ROLES.USER },
     }),
   },
   USER: {
@@ -117,7 +118,7 @@ export const ENDPOINTS = {
       requestSchema: GetMeInfoRequestSchema,
       responseSchema: GetMeInfoResponseSchema,
       method: 'post',
-      auth: { isAuthenticated: true },
+      auth: { isAuthenticated: true, minRole: ROLES.USER },
     }),
     GET_ONE: createEndpoint({
       path: `${ROUTES.USER}/:id`,
@@ -131,7 +132,7 @@ export const ENDPOINTS = {
       requestSchema: GetAllUsersRequestSchema,
       responseSchema: GetAllUsersResponseSchema,
       method: 'post',
-      auth: { isAuthenticated: true },
+      auth: { isAuthenticated: true, minRole: ROLES.ADMIN },
     }),
   },
   AUTH: {
@@ -154,7 +155,7 @@ export const ENDPOINTS = {
       requestSchema: LogoutRequestSchema,
       responseSchema: LogoutResponseSchema,
       method: 'post',
-      auth: { isAuthenticated: true },
+      auth: { isAuthenticated: true, minRole: ROLES.USER },
     }),
   },
 } as const;

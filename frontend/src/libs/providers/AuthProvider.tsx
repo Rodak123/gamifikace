@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import type { AuthData } from '../types/auth';
-import { ENDPOINTS, type User } from '@gamifikace/shared';
+import { ENDPOINTS, hasAccess, type Role, type User } from '@gamifikace/shared';
 import { env } from '../../config';
 import { type TokenResponse, useGoogleLogin } from '@react-oauth/google';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -21,12 +21,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     retry: false,
   });
 
-  const authData: AuthData = useMemo(
-    () => ({
-      isAuthenticated: userQuery.isSuccess && !!userQuery.data,
-    }),
-    [userQuery.isSuccess, userQuery.data],
-  );
+  const authData: AuthData = useMemo(() => {
+    const isAuthenticated = userQuery.isSuccess && !!userQuery.data;
+
+    return {
+      isAuthenticated,
+      hasAccess: (minRole: Role) =>
+        isAuthenticated && hasAccess(userQuery.data.user.role, minRole),
+    };
+  }, [userQuery.isSuccess, userQuery.data]);
 
   const loggedUser = (userQuery.data?.user as User) || null;
 

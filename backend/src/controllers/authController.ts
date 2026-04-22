@@ -1,4 +1,4 @@
-import { User, ENDPOINTS } from '@gamifikace/shared';
+import { User, ENDPOINTS, ROLES } from '@gamifikace/shared';
 import { prisma } from '../config/db';
 import { UserService } from '../services/UserService';
 import { OAuth2Client } from 'google-auth-library';
@@ -68,7 +68,8 @@ export const devloginHandler: TypedRequestHandler<typeof ENDPOINTS.AUTH.LOGIN_DE
     payload.email,
     payload.name,
     payload.given_name,
-    payload.family_name
+    payload.family_name,
+    ROLES.SUPERADMIN
   );
 
   loginWithUser(res, user);

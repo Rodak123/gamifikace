@@ -11,7 +11,7 @@ http:
     data: |-
       {
         "achievement": {"key": "react-dev"},
-        "user": {"id": "b1c90688-7b28-49fe-a83b-2562abeb5a42"}
+        "user": {"id": "a3769268-81dc-41d2-8413-44f0f2589d8e"}
       }
   auth: inherit
 

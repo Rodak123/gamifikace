@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import { UserService } from '../src/services/UserService.js';
 import { createMockContext, MockContext } from './mockDb.js';
 import { PrismaClient } from '../src/generated/prisma/client.js';
+import { ROLES } from '@gamifikace/shared';
 
 describe('UserService', () => {
   let mockCtx: MockContext;
@@ -20,11 +21,18 @@ describe('UserService', () => {
       firstName: 'John',
       lastName: 'Doe',
       createdAt: new Date(),
+      role: ROLES.SUPERADMIN,
     };
 
     mockCtx.prisma.user.create.mockResolvedValue(fakeUser);
 
-    const result = await userService.createUser('john_doe', 'John', 'Doe', 'john@example.com');
+    const result = await userService.createUser(
+      'john_doe',
+      'John',
+      'Doe',
+      'john@example.com',
+      ROLES.SUPERADMIN
+    );
 
     expect(mockCtx.prisma.user.create).toHaveBeenCalledOnce();
     expect(mockCtx.prisma.user.create).toHaveBeenCalledWith({
@@ -33,6 +41,7 @@ describe('UserService', () => {
         nickname: 'john_doe',
         firstName: 'John',
         lastName: 'Doe',
+        role: ROLES.SUPERADMIN,
       },
     });
 
@@ -47,6 +56,7 @@ describe('UserService', () => {
       firstName: 'John',
       lastName: 'Doe',
       createdAt: new Date(),
+      role: ROLES.SUPERADMIN,
     };
 
     mockCtx.prisma.user.findFirst.mockResolvedValue(fakeUser);

@@ -7,12 +7,19 @@ datasource db {
   provider = "postgresql"
 }
 
+enum Role {
+  USER
+  ADMIN
+  SUPERADMIN
+}
+
 model User {
   id           String               @id @default(uuid())
   email        String               @unique
   nickname     String               @unique
   firstName    String               @unique
   lastName     String               @unique
+  role         Role                 @default(USER)
   createdAt    DateTime             @default(now())
   achievements UserAchievementLog[]
 }

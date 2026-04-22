@@ -23,11 +23,13 @@ app.use(cors({ origin: env.CLIENT_URL, credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  limit: 100,
-});
-app.use(limiter);
+if (!DEV_ENV) {
+  const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    limit: 100,
+  });
+  app.use(limiter);
+}
 
 // Routes
 app.use(rootRoutes);

@@ -1,10 +1,7 @@
 import { BaseRequestSchemaType, SuccessRespoonseSchemaType } from '../schemas';
+import { Auth } from './auth';
 
 export type Method = 'get' | 'post';
-
-export interface Auth<TIsAuth extends boolean> {
-  isAuthenticated: TIsAuth;
-}
 
 export interface Endpoint<
   TReq extends BaseRequestSchemaType,
