@@ -11,6 +11,7 @@
     - [Manually](#manually)
   - [Deploy](#deploy)
   - [Screenshots](#screenshots)
+  - [ToDo](#todo)
 
 ## Parts
 
@@ -66,3 +67,7 @@ TBD
 ## Screenshots
 
 ![achievements](./docs/achievements.png)
+
+## ToDo
+
+The todo is: [TODO.txt](./TODO.txt)

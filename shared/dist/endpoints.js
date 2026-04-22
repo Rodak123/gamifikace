@@ -1,6 +1,7 @@
-import { CreateAchievementRequestSchema, CreateAchievementResponseSchema, DevLoginRequestSchema, DevLoginResponseSchema, GetAllAchievementsRequestSchema, GetAllAchievementsResponseSchema, GetOneAchievementRequestSchema, GetOneAchievementResponseSchema, GetMeInfoRequestSchema, GetMeInfoResponseSchema, HealthRequestSchema, HealthResponseSchema, LoginRequestSchema, LoginResponseSchema, LogoutRequestSchema, LogoutResponseSchema, EarnAchievementRequestSchema, EarnAchievementResponseSchema, GetScoreboardRequestSchema, GetScoreboardResponseSchema, RevokeAchievementRequestSchema, RevokeAchievementResponseSchema, GetOneUserRequestSchema, GetOneUserResponseSchema, GetAllUsersRequestSchema, GetAllUsersResponseSchema, GetMineAchievementsRequestSchema, GetMineAchievementsResponseSchema, } from './schemas';
+import { CreateAchievementRequestSchema, CreateAchievementResponseSchema, DevLoginRequestSchema, DevLoginResponseSchema, GetAllAchievementsRequestSchema, GetAllAchievementsResponseSchema, GetOneAchievementRequestSchema, GetOneAchievementResponseSchema, GetMeInfoRequestSchema, GetMeInfoResponseSchema, HealthRequestSchema, HealthResponseSchema, LoginRequestSchema, LoginResponseSchema, LogoutRequestSchema, LogoutResponseSchema, EarnAchievementRequestSchema, EarnAchievementResponseSchema, GetScoreboardRequestSchema, GetScoreboardResponseSchema, RevokeAchievementRequestSchema, RevokeAchievementResponseSchema, GetOneUserRequestSchema, GetOneUserResponseSchema, GetAllUsersRequestSchema, GetAllUsersResponseSchema, GetMineAchievementsRequestSchema, GetMineAchievementsResponseSchema, HasAchievementResponseSchema, HasAchievementRequestSchema, } from './schemas';
 import { ROLES } from './types';
 const createEndpoint = (endpoint) => endpoint;
+const createAuthenticatedEndpoint = (endpoint) => endpoint;
 const ROUTES = {
     ROOT: '',
     USER: '/user',
@@ -49,8 +50,15 @@ export const ENDPOINTS = {
             method: 'post',
             auth: { isAuthenticated: false },
         }),
-        EARN: createEndpoint({
-            path: `${ROUTES.ACHIEVEMENT}/earn`,
+        HAS_ACHIEVEMENT: createAuthenticatedEndpoint({
+            path: `${ROUTES.ACHIEVEMENT}/hasAchievement`,
+            requestSchema: HasAchievementRequestSchema,
+            responseSchema: HasAchievementResponseSchema,
+            method: 'post',
+            auth: { isAuthenticated: true, minRole: ROLES.ADMIN },
+        }),
+        GRANT: createEndpoint({
+            path: `${ROUTES.ACHIEVEMENT}/grant`,
             requestSchema: EarnAchievementRequestSchema,
             responseSchema: EarnAchievementResponseSchema,
             method: 'post',
@@ -63,7 +71,7 @@ export const ENDPOINTS = {
             method: 'post',
             auth: { isAuthenticated: false },
         }),
-        GET_MINE: createEndpoint({
+        GET_MINE: createAuthenticatedEndpoint({
             path: `${ROUTES.ACHIEVEMENT}/mine`,
             requestSchema: GetMineAchievementsRequestSchema,
             responseSchema: GetMineAchievementsResponseSchema,
@@ -72,7 +80,7 @@ export const ENDPOINTS = {
         }),
     },
     USER: {
-        ME: createEndpoint({
+        ME: createAuthenticatedEndpoint({
             path: `${ROUTES.USER}/me`,
             requestSchema: GetMeInfoRequestSchema,
             responseSchema: GetMeInfoResponseSchema,
@@ -86,7 +94,7 @@ export const ENDPOINTS = {
             method: 'post',
             auth: { isAuthenticated: false },
         }),
-        GET_ALL: createEndpoint({
+        GET_ALL: createAuthenticatedEndpoint({
             path: `${ROUTES.USER}/all`,
             requestSchema: GetAllUsersRequestSchema,
             responseSchema: GetAllUsersResponseSchema,
@@ -109,7 +117,7 @@ export const ENDPOINTS = {
             method: 'post',
             auth: { isAuthenticated: false },
         }),
-        LOGOUT: createEndpoint({
+        LOGOUT: createAuthenticatedEndpoint({
             path: `${ROUTES.AUTH}/logout`,
             requestSchema: LogoutRequestSchema,
             responseSchema: LogoutResponseSchema,

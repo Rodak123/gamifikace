@@ -1,17 +1,17 @@
 info:
-  name: Earn Achievement
+  name: Has Achievement
   type: http
-  seq: 4
+  seq: 7
 
 http:
   method: POST
-  url: "{{API_PATH}}/achievement/earn"
+  url: "{{API_PATH}}/achievements/hasAchievement"
   body:
     type: json
     data: |-
       {
-        "achievement": {"key": "react-dev"},
-        "user": {"id": "a3769268-81dc-41d2-8413-44f0f2589d8e"}
+        "user": { "id": "" },
+        "achievement": {"key": "react-dev"}
       }
   auth: inherit
 

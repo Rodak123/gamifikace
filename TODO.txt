@@ -1,0 +1,6 @@
+- Centralize queries and mutations
+- Add creating and removing achievements to the admin panel
+- Try (and fix) google auth 
+- Create deploy scripts
+- Improve design
+- Add backend tests

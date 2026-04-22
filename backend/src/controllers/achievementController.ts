@@ -45,8 +45,8 @@ export const getOneAchievementHandler: TypedRequestHandler<
   };
 };
 
-export const earnAchievementHandler: TypedRequestHandler<
-  typeof ENDPOINTS.ACHIEVEMENT.EARN
+export const grantAchievementHandler: TypedRequestHandler<
+  typeof ENDPOINTS.ACHIEVEMENT.GRANT
 > = async (req) => {
   const userAchievementLog = await achievementService.earnAchievement(
     req.body.user.id,
@@ -75,5 +75,18 @@ export const getMineAchievementsHandler: TypedRequestHandler<
 
   return {
     achievements: achievements,
+  };
+};
+
+export const hasAchievementsHandler: TypedRequestHandler<
+  typeof ENDPOINTS.ACHIEVEMENT.HAS_ACHIEVEMENT
+> = async (req) => {
+  const hasAchievement = await achievementService.hasAchievement(
+    req.body.user.id,
+    req.body.achievement.key
+  );
+
+  return {
+    hasAchievement,
   };
 };

@@ -11,4 +11,7 @@ export default defineConfig({
   datasource: {
     url: dbUrl,
   },
+  migrations: {
+    seed: 'tsx src/config/db-seed.ts',
+  },
 });

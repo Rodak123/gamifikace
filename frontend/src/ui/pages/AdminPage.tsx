@@ -1,12 +1,20 @@
 import { ENDPOINTS } from '@gamifikace/shared';
+import { DefaultLayout } from './layouts/DefaultLayout';
+import { UserAchievementTable } from '../components/UserAchievementTable';
 import { useQuery } from '@tanstack/react-query';
 import { apiClient } from '../../middleware';
-import { Typography } from '../components/Typography';
-import { DefaultLayout } from './layouts/DefaultLayout';
 import { LoadingPage } from './LoadingPage';
-import { AchievementManage } from '../components/AchievementManage';
 
 export const AdminPage: React.FC = () => {
+  const usersQuery = useQuery({
+    queryKey: ['users'],
+    queryFn: () =>
+      apiClient.request(ENDPOINTS.USER.GET_ALL, {
+        body: {},
+        params: {},
+      }),
+  });
+
   const achievementsQuery = useQuery({
     queryKey: ['achievements'],
     queryFn: () =>
@@ -16,20 +24,16 @@ export const AdminPage: React.FC = () => {
       }),
   });
 
-  if (!achievementsQuery.isSuccess) {
+  if (!achievementsQuery.isSuccess || !usersQuery.isSuccess) {
     return <LoadingPage />;
   }
 
+  const users = usersQuery.data.users;
+  const achievements = achievementsQuery.data.achievements;
+
   return (
     <DefaultLayout>
-      <Typography variant='h1' size='5xl'>
-        Gamifikace
-      </Typography>
-      {achievementsQuery.data.achievements.map((achievement) => {
-        return (
-          <AchievementManage key={achievement.key} achievement={achievement} />
-        );
-      })}
+      <UserAchievementTable achievements={achievements} users={users} />
     </DefaultLayout>
   );
 };

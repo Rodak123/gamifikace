@@ -25,11 +25,16 @@ export const AchievementsPage: React.FC = () => {
       <Typography variant='h1' size='5xl' className='text-center'>
         Achievements
       </Typography>
-      {achievementsQuery.data.achievements.map((achievement) => {
-        return (
-          <AchievementDisplay key={achievement.key} achievement={achievement} />
-        );
-      })}
+      <div className='flex flex-col gap-4'>
+        {achievementsQuery.data.achievements.map((achievement) => {
+          return (
+            <AchievementDisplay
+              key={achievement.key}
+              achievement={achievement}
+            />
+          );
+        })}
+      </div>
     </DefaultLayout>
   );
 };

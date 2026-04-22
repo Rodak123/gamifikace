@@ -1,3 +1,4 @@
+import { Method } from 'axios';
 import {
   BaseRequestSchemaType,
   CreateAchievementRequestSchema,
@@ -29,17 +30,33 @@ import {
   GetAllUsersResponseSchema,
   GetMineAchievementsRequestSchema,
   GetMineAchievementsResponseSchema,
+  HasAchievementResponseSchema,
+  HasAchievementRequestSchema,
 } from './schemas';
-import { ROLES } from './types';
+import { AuthenticatedAuth, ROLES, UnauthenticatedAuth } from './types';
 import { Endpoint } from './types/endpoint';
 
 const createEndpoint = <
   TReq extends BaseRequestSchemaType,
   TRes extends SuccessRespoonseSchemaType,
-  TIsAuth extends boolean,
->(
-  endpoint: Endpoint<TReq, TRes, TIsAuth>,
-): Endpoint<TReq, TRes, TIsAuth> => endpoint;
+>(endpoint: {
+  path: string;
+  method: Method;
+  requestSchema: TReq;
+  responseSchema: TRes;
+  auth: UnauthenticatedAuth;
+}): Endpoint<TReq, TRes, false> => endpoint as Endpoint<TReq, TRes, false>;
+
+const createAuthenticatedEndpoint = <
+  TReq extends BaseRequestSchemaType,
+  TRes extends SuccessRespoonseSchemaType,
+>(endpoint: {
+  path: string;
+  method: Method;
+  requestSchema: TReq;
+  responseSchema: TRes;
+  auth: AuthenticatedAuth;
+}): Endpoint<TReq, TRes, true> => endpoint as Endpoint<TReq, TRes, true>;
 
 const ROUTES = {
   ROOT: '',
@@ -90,8 +107,15 @@ export const ENDPOINTS = {
       method: 'post',
       auth: { isAuthenticated: false },
     }),
-    EARN: createEndpoint({
-      path: `${ROUTES.ACHIEVEMENT}/earn`,
+    HAS_ACHIEVEMENT: createAuthenticatedEndpoint({
+      path: `${ROUTES.ACHIEVEMENT}/hasAchievement`,
+      requestSchema: HasAchievementRequestSchema,
+      responseSchema: HasAchievementResponseSchema,
+      method: 'post',
+      auth: { isAuthenticated: true, minRole: ROLES.ADMIN },
+    }),
+    GRANT: createEndpoint({
+      path: `${ROUTES.ACHIEVEMENT}/grant`,
       requestSchema: EarnAchievementRequestSchema,
       responseSchema: EarnAchievementResponseSchema,
       method: 'post',
@@ -104,7 +128,7 @@ export const ENDPOINTS = {
       method: 'post',
       auth: { isAuthenticated: false },
     }),
-    GET_MINE: createEndpoint({
+    GET_MINE: createAuthenticatedEndpoint({
       path: `${ROUTES.ACHIEVEMENT}/mine`,
       requestSchema: GetMineAchievementsRequestSchema,
       responseSchema: GetMineAchievementsResponseSchema,
@@ -113,7 +137,7 @@ export const ENDPOINTS = {
     }),
   },
   USER: {
-    ME: createEndpoint({
+    ME: createAuthenticatedEndpoint({
       path: `${ROUTES.USER}/me`,
       requestSchema: GetMeInfoRequestSchema,
       responseSchema: GetMeInfoResponseSchema,
@@ -127,7 +151,7 @@ export const ENDPOINTS = {
       method: 'post',
       auth: { isAuthenticated: false },
     }),
-    GET_ALL: createEndpoint({
+    GET_ALL: createAuthenticatedEndpoint({
       path: `${ROUTES.USER}/all`,
       requestSchema: GetAllUsersRequestSchema,
       responseSchema: GetAllUsersResponseSchema,
@@ -150,7 +174,7 @@ export const ENDPOINTS = {
       method: 'post',
       auth: { isAuthenticated: false },
     }),
-    LOGOUT: createEndpoint({
+    LOGOUT: createAuthenticatedEndpoint({
       path: `${ROUTES.AUTH}/logout`,
       requestSchema: LogoutRequestSchema,
       responseSchema: LogoutResponseSchema,

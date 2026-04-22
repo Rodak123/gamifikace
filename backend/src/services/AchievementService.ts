@@ -107,4 +107,14 @@ export class AchievementService {
       where: { users: { some: { userId: userId } } },
     });
   }
+
+  public async hasAchievement(userId: string, achievementKey: string) {
+    return (
+      (
+        await this.db.achievement.findMany({
+          where: { key: achievementKey, users: { some: { userId: userId } } },
+        })
+      ).length > 0
+    );
+  }
 }

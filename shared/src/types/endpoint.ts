@@ -6,7 +6,7 @@ export type Method = 'get' | 'post';
 export interface Endpoint<
   TReq extends BaseRequestSchemaType,
   TRes extends SuccessRespoonseSchemaType,
-  TIsAuth extends boolean = false,
+  TIsAuth extends boolean,
 > {
   path: string;
   method: Method;

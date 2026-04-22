@@ -14,6 +14,7 @@ export * from './achievement/getOneAchievement.schema';
 export * from './achievement/earnAchievement.schema';
 export * from './achievement/revokeAchievement.schema';
 export * from './achievement/getMineAchievements.schema';
+export * from './achievement/hasAchievement.schema';
 export * from './userAchievementLog/userAchievementLog.schema';
 export * from './game/scoreboard.schema';
 export * from './game/getScoreboard.schema';

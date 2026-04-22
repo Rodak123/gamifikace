@@ -4,9 +4,10 @@ import {
   getAllAchievementsHandler,
   createAchievementHandler,
   getOneAchievementHandler,
-  earnAchievementHandler,
+  grantAchievementHandler,
   revokeAchievementHandler,
   getMineAchievementsHandler,
+  hasAchievementsHandler,
 } from '../controllers/achievementController.js';
 import { defineRoute } from '../utils/defineRoute.js';
 
@@ -23,8 +24,8 @@ defineRoute(achievementRoutes, {
 });
 
 defineRoute(achievementRoutes, {
-  definition: ENDPOINTS.ACHIEVEMENT.EARN,
-  fn: earnAchievementHandler,
+  definition: ENDPOINTS.ACHIEVEMENT.GRANT,
+  fn: grantAchievementHandler,
 });
 
 defineRoute(achievementRoutes, {
@@ -35,6 +36,11 @@ defineRoute(achievementRoutes, {
 defineRoute(achievementRoutes, {
   definition: ENDPOINTS.ACHIEVEMENT.GET_MINE,
   fn: getMineAchievementsHandler,
+});
+
+defineRoute(achievementRoutes, {
+  definition: ENDPOINTS.ACHIEVEMENT.HAS_ACHIEVEMENT,
+  fn: hasAchievementsHandler,
 });
 
 defineRoute(achievementRoutes, {

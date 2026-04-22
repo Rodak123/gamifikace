@@ -1,0 +1,22 @@
+info:
+  name: Grant Achievement
+  type: http
+  seq: 4
+
+http:
+  method: POST
+  url: "{{API_PATH}}/achievement/grant"
+  body:
+    type: json
+    data: |-
+      {
+        "achievement": {"key": "react-dev"},
+        "user": {"id": "a3769268-81dc-41d2-8413-44f0f2589d8e"}
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

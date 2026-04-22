@@ -2,7 +2,6 @@ import axios, { AxiosError, type AxiosInstance } from 'axios';
 import { API_PATH } from './apiPath';
 import { z } from 'zod';
 import {
-  ENDPOINTS,
   ErrorResponseSchema,
   type ApiResponse,
   type BaseRequestSchemaType,
