@@ -6,7 +6,7 @@ export const BaseRequestSchema = z.object({
 });
 export const SuccessResponseSchema = z.object({
     success: z.literal(true),
-    data: z.any(),
+    data: z.unknown(),
 });
 export const SuccessResponseSchemaWithData = (dataSchema) => {
     return SuccessResponseSchema.extend({

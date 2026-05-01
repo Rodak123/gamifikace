@@ -11,7 +11,7 @@ export type BaseRequestSchemaType = ZodObject<{
 }>;
 export declare const SuccessResponseSchema: z.ZodObject<{
     success: z.ZodLiteral<true>;
-    data: z.ZodAny;
+    data: z.ZodUnknown;
 }, z.core.$strip>;
 export type SuccessRespoonseSchemaType = ZodObject<{
     success: z.ZodLiteral<true>;

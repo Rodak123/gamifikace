@@ -14,7 +14,7 @@ export type BaseRequestSchemaType = ZodObject<{
 
 export const SuccessResponseSchema = z.object({
   success: z.literal(true),
-  data: z.any(),
+  data: z.unknown(),
 });
 
 export type SuccessRespoonseSchemaType = ZodObject<{
